@@ -1,0 +1,41 @@
+/* Light background theme. */
+.back--default { background-color: $default-light; }
+.back--primary { background-color: $primary-light; }
+.back--secondary { background-color: $secondary-light; }
+.back--danger { background-color: $danger-light; }
+.back--success { background-color: $success-light; }
+.back--warning { background-color: $warning-light; }
+.back--white { background-color: white; }
+
+/* Dark background theme */
+.back--gray { background-color: $default; }
+
+/* Light text theme */
+.default-light { color: $default-light; }
+.primary-light { color: $primary-light; }
+.secondary-light { color: $secondary-light; }
+.danger-light { color: $danger-light; }
+.success-light { color: $success-light; }
+.warning-light { color: $warning-light; }
+.white-light { color: white; }
+
+/* Light text theme */
+.default { color: $default; }
+.primary { color: $primary; }
+.secondary { color: $secondary; }
+.danger { color: $danger; }
+.success { color: $success; }
+.warning { color: $warning; }
+.white { color: white; }
+
+/* Subtle patterns */
+.pattern-agsquare { background-image: url("/img/patterns/agsquare.png"); }
+.pattern-tweed { background-image: url("/img/patterns/tweed.png"); }
+.pattern-p5 { background-image: url("/img/patterns/p5.png"); }
+.pattern-azsubtle { background-image: url("/img/patterns/az_subtle.png"); }
+.pattern-black-lozenge { background-image: url("/img/patterns/black_lozenge.png"); }
+.pattern-dark-fish-skin { background-image: url("/img/patterns/dark_fish_skin.png"); }
+.pattern-honey-subtle { background-image: url("/img/patterns/honey_im_subtle.png"); }
+.pattern-linedpaper { background-image: url("/img/patterns/linedpaper.png"); }
+.pattern-mochagrunge { background-image: url("/img/patterns/mochaGrunge.png"); }
+.pattern-grey-wash-wall { background-image: url("/img/patterns/grey_wash_wall.png"); }

@@ -1,0 +1,13 @@
+/*.repsProfile {
+  overflow: hidden;
+}
+*/
+.leaflet-popup-content {
+  overflow: hidden;
+  margin: auto;
+  display:inline-block;
+}
+
+.leaflet-popup-content-wrapper {
+  overflow: hidden;
+}

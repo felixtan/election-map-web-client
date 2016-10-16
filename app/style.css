@@ -1,0 +1,15 @@
+@import 'normalize.css';
+
+/* Base styles */
+@import 'styles/base/variables';
+@import 'styles/base/mixins';
+@import 'styles/base/elements';
+@import 'styles/base/util';
+@import 'styles/base/theme';
+@import 'styles/base/type';
+
+/* Candidates for component styles */
+@import 'styles/base/layout';
+@import 'styles/base/image';
+
+/* Component styles */
