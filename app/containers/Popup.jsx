@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Popup } from 'react-leaflet'
 import Profile from '../components/PopupProfile'
 
-require('../styles/components/politics.css')
+require('../styles/components/popup.css')
 
 export default class PopupContainer extends React.Component {
   constructor(props) {
