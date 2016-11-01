@@ -24,7 +24,7 @@ MongoClient.connect(dbconfig.uri, (err, db) => {
       if (data.error) {
         doc[key]  = [];
       } else {
-        doc[key] = data.officials;
+        doc[key] = data.reps;
       }
       console.log(`created entry for ${key}...`);
     });

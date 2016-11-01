@@ -72,8 +72,8 @@ function mapStateToReps(state, numberOfDistricts, typeOfDistrict) {
     delay();
 
     return getRep(params, state, districtNumber, typeOfDistrict).then(data => {
-      if (typeof data.error === 'undefined' && typeof data.officials !== 'undefined') {
-        stateDoc.districts[districtNumber] = data.officials[0];
+      if (typeof data.error === 'undefined' && typeof data.reps !== 'undefined') {
+        stateDoc.districts[districtNumber] = data.reps[0];
       } else {
         console.log(data);
       }
@@ -167,10 +167,10 @@ Getting this error. Need to set delays.
 //     return getRep(params, state, districtNumber, typeOfDistrict)
 //     .then(data => {
 //       if (typeof data.error === 'undefined') {
-//         // stateDoc.districts[districtNumber] = data.officials[0];
+//         // stateDoc.districts[districtNumber] = data.reps[0];
 //         reqs.push({
 //           district: districtNumber,
-//           official: data.officials[0]
+//           official: data.reps[0]
 //         });
 //         console.log(`completed entry for ${state} ${typeOfDistrict.toUpperCase()} ${districtNumber}...`);
 //         districtNumber += 1;

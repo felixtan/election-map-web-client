@@ -12,8 +12,8 @@ export default class PopupContainer extends React.Component {
 
   render() {
     let profiles;
-    if (Array.isArray(this.props.content.officials) && this.props.content.officials.length) {
-      profiles = this.props.content.officials.map((o, index) => {
+    if (Array.isArray(this.props.content.reps) && this.props.content.reps.length) {
+      profiles = this.props.content.reps.map((o, index) => {
         return (<Profile office={this.props.content.office}
                          official={o}
                          state={this.props.content.state}
@@ -22,7 +22,7 @@ export default class PopupContainer extends React.Component {
       })
     } else {    // house reps are not stored in arrays
       profiles = [(<Profile office={this.props.content.office}
-                            official={this.props.content.officials}
+                            official={this.props.content.reps}
                             state={this.props.content.state}
                             district={this.props.content.district}
                             key={0} />)]

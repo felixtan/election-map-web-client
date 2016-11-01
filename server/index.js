@@ -43,9 +43,32 @@ app.get('/api/v1/:levelOfGov/:branchOfGov/:role/:country', (req, res) => {
     } else {
       res.status(400).json({ msg: 'Invalid branchOfGov in request url' });
     }
+  } else if (q.levelOfGov === 'state' && q.country.toLowerCase() === 'us') {
+    if (q.branchOfGov === 'legislative') {
+      if (q.role === 'upper') {
+        db.collection('stateSenators').findOne().then(data => { res.json(data); });
+      } else if (q.role === 'lower') {
+        db.collection('stateAssemblyMembers').findOne().then(data => { res.json(data); });
+      } else {
+        res.status(400).json({ msg: 'Invalid role in request url' });
+      }
+    } else {
+      res.status(400).json({ msg: 'Invalid request url' });
+    }
   } else {
     res.status(400).json({ msg: 'Invalid request url' });
   }
+});
+
+app.get('/api/v1/elections/:country', (req, res) => {
+  const q = req.params;
+  db.collection('elections').findOne({ iso_a2: q.country }).then((err, doc) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(doc);
+    }
+  });
 });
 
 // house reps and state legislators

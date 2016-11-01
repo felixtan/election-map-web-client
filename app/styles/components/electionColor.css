@@ -1,3 +1,22 @@
-.leaflet-container path{
-  transition: fill 1s;
+@keyframes activeElectionGlow {
+  0% {
+    stroke-opacity: 0.75;
+  }
+
+  50% {
+    stroke-opacity: 0;
+  }
+
+  100% {
+    stroke-opacity: 0.75;
+  }
+}
+
+.leaflet-container path.election-status-active {
+  will-change: stroke-opacity;
+  stroke: red;
+  animation-name: activeElectionGlow;
+  animation-duration: 10s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
 }

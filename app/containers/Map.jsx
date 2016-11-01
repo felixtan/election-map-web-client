@@ -4,6 +4,9 @@ import { Map } from 'react-leaflet'
 import BaseMapLayer from './BaseMap'
 import LayerControl from './LayerControl'
 
+// TODO: make sure the transition time is the same as this.state.electionColorDelay
+require('../styles/components/electionColor.css')
+
 export default class PoliticsMap extends React.Component {
 
   constructor(props) {
@@ -17,6 +20,8 @@ export default class PoliticsMap extends React.Component {
           position: "absolute",
         },
     }
+
+    // console.log(this.addTo)
   }
 
   render () {

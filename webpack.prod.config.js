@@ -24,7 +24,7 @@ const APP = path.join(__dirname, 'app');
 const BUILD = path.join(__dirname, 'build');
 const STYLE = path.join(__dirname, 'app/style.css');
 const PUBLIC = path.join(__dirname, 'app/public');
-const TEMPLATE = path.join(__dirname, 'app/templates/index.html');
+const TEMPLATE = path.join(__dirname, 'app/index.html');
 const NODE_MODULES = path.join(__dirname, 'node_modules');
 
 const PACKAGE = Object.keys(

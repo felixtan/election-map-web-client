@@ -1,4 +1,4 @@
-const thing = {
+export default {
   "01": "AL",
   "02": "AK",
   "04": "AZ",
@@ -56,5 +56,3 @@ const thing = {
   "72": "PR",   // Puerto Rico
   "78": "VI",   // Virgin Islands
 }
-
-export default thing

@@ -16,6 +16,7 @@ const civicInfoAPIKey = googleCivicInfoConfig.key
 // custom api
 import api from '../config/api.json'
 const apiUrl = api.url
+const electionsUri = api.elections;
 
 const ocdIdTemplate = "ocd-division/country:us/"
 const queryParamsTemplate = `key=${civicInfoAPIKey}&levels=country`
@@ -41,6 +42,12 @@ export function getHeadOfState() {
 
 export function getHouseReps(state, district) {
 
+}
+
+export function getAllElectionsForCountry(countryISOA2) {
+  const url = electionsUri + countryISOA2
+  const req = new Request(url)
+  return fetch(req)
 }
 
 export function getAllCountryLevelExecutives(country) {

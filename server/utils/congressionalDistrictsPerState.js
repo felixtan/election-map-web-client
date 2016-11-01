@@ -5,7 +5,7 @@
 // Caveats:
 //  The territories' (vi, pr, mp, gu, as, dc) and states with 1 representative
 // to congress can be gotten without the cd:<> part of the ocdId
-const districtsPerState = {
+export default {
   "AL": 7,
   "AK": 1,
   "AZ": 9,
@@ -63,5 +63,3 @@ const districtsPerState = {
   "PR": 1,
   "VI": 1
 }
-
-export default districtsPerState;

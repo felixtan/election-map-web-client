@@ -63,8 +63,8 @@ function mapStateToReps(state, numberOfDistricts, typeOfDistrict) {
     delay(750);
 
     return getRep(params, state, districtNumber, typeOfDistrict).then(data => {
-      if (typeof data.error === 'undefined' && typeof data.officials !== 'undefined') {
-        stateDoc.districts[districtNumber] = data.officials[0];
+      if (typeof data.error === 'undefined' && typeof data.reps !== 'undefined') {
+        stateDoc.districts[districtNumber] = data.reps[0];
       } else {
         console.log(data);
       }

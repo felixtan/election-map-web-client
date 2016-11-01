@@ -7,3 +7,10 @@ Icon?
 node_modules
 *.log
 *.gz
+
+#server
+server/utils/co*
+server/utils/state*
+server/utils/FEC*
+server/utils/party*
+server/scripts/

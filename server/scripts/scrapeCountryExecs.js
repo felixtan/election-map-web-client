@@ -2,13 +2,11 @@ import _ from 'lodash';
 import MongoClient from 'mongodb';
 import Promise from 'bluebird';
 import dbconfig from '../config/mongo';
+import countries from '../utils/countriesList';
 import { getRep, getRepTest, writeBigDocToDB } from '../utils/helpers';
 
 const collectionName = "countryExecutives";
 const params = {};
-
-// TODO: import array of standard country codes
-const countries = ['US'];
 
 MongoClient.connect(dbconfig.uri, (err, db) => {
   if (err) throw err;
@@ -21,7 +19,7 @@ MongoClient.connect(dbconfig.uri, (err, db) => {
         _.each(data.offices, (office, index) => {
           _.each(office.roles, role => {
             _.each(office.officialIndices, i => {
-              doc[country][role] = data.officials[i];
+              doc[country][role] = data.reps[i];
               doc[country][role].office = office.name;
             });
           });

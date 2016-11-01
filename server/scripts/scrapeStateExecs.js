@@ -27,7 +27,7 @@ MongoClient.connect(dbconfig.uri, (err, db) => {
 
         _.each(execOffices, (office, index) => {
             _.each(office.officialIndices, i => {
-              doc[state][office.name] = data.officials[i];
+              doc[state][office.name] = data.reps[i];
             });
         });
       }

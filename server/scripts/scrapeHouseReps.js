@@ -57,7 +57,7 @@ function mapStateToHouseReps(state, numberOfDistricts) {
       if (data.error) {
         stateDoc[districtNumber] = {};
       } else {
-        stateDoc[districtNumber] = data.officials[0];
+        stateDoc[districtNumber] = data.reps[0];
       }
 
       console.log(`created entry for ${state} CD${districtNumber}...`);
