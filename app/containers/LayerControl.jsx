@@ -31,7 +31,6 @@ export default class LayerControl extends React.Component {
 
     // Methods
     this.createDefaultStripePatternForState = this.createDefaultStripePatternForState.bind(this)
-    this.createElectionStripePatternForState = this.createElectionStripePatternForState.bind(this)
     this.getPartyColor = this.getPartyColor.bind(this)
 
     getAllCountryLevelExecutives(this.state.country.toLowerCase()).then(res => {
@@ -135,9 +134,9 @@ export default class LayerControl extends React.Component {
         patternUnits: 'objectBoundingBox',
         height: 0.2,
         angle: 45,
-        opacity: 1.5,
+        opacity: 1.0,
         weight: 0.1,
-        spaceOpacity: 1.5,
+        spaceOpacity: 1.0,
         spaceWeight: 0.1 // not working,
       })
 
@@ -149,73 +148,28 @@ export default class LayerControl extends React.Component {
     }
   }
 
-  createElectionStripePatternForState(stateCode, repsMap) {
-    const territories = ['DC', 'AS', 'PR', 'GU', 'MP', 'VI', 'UM'];
-    const reps = repsMap[stateCode]
-
-    if (territories.indexOf(stateCode) === -1) {
-      // assume first senate seat in array is up for election
-      const party0 = reps[0].party
-      const party1 = reps[1].party
-      const challengerParty = party0 === 'Democratic' ? 'Republican' : 'Democratic'
-      const challengerColor = getChallengerPartyColor(party0)
-      const color1 = this.getPartyColor(party1)
-      // if (stateCode === 'NY') console.log(`${challengerParty} ${party1}`)
-      const pattern = new L.StripePattern({
-        color: challengerColor,
-        spaceColor: color1,
-        patternContentUnits: 'objectBoundingBox',
-        patternUnits: 'objectBoundingBox',
-        height: 0.2,
-        angle: 45,
-        opacity: 1.0,
-        weight: 0.1,
-        spaceOpacity: 1.0,
-        spaceWeight: 0.1 // not working
-      })
-
-      pattern.addTo(this.state.leafletMap)
-      this.setState({ electionStatePatternsForSenate: { ...this.state.electionStatePatternsForSenate, [stateCode]: pattern }})
-      return pattern
-    } else {
-      return null
-    }
-
-    // party = incumbent's party
-    function getChallengerPartyColor(party) {
-      switch (party) {
-        case 'Democratic':
-          return '#ff0000';
-        case 'Republican':
-          return '#0000ff';
-        default:
-          return 'eeeeee';
-      }
-    }
-  }
-
   render () {
-    if (typeof this.state.elections.country === 'undefined' || this.state.elections.country === null) {
+    if (typeof this.state.elections.country === 'undefined' || this.state.elections.country === null || Object.keys(this.state.countryLegislativeLower).length === 0) {
       // TODO: spinner?
       return null;
     }
 
     return (
       <LayersControl ref='layerControl'>
-        <LayersControl.BaseLayer name='Country Executive' checked={true} ref='countryExecLayer' >
+        <LayersControl.BaseLayer name='Executive' checked={true} ref='countryExecLayer' >
           <Countries elections={this.state.elections.country.executive}
                      reps={this.state.countryExecutives}
                      layerControl={this}
                      electionColorDelay={this.state.electionColorDelay} />
         </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name='AdminSubdiv1 Executive/country Legislature Upper' ref='countryLegisUpperLayer'>
+        <LayersControl.BaseLayer name='Senate' ref='countryLegisUpperLayer'>
           <States elections={this.state.elections.country.legislativeUpper}
                   reps={this.state.countryLegislativeUpper}
                   defaultPatterns={this.state.defaultStatePatternsForSenate}
                   layerControl={this}
                   electionColorDelay={this.state.electionColorDelay} />
         </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name='Country Legislature Lower' ref='countryLegisLowerLayer'>
+        <LayersControl.BaseLayer name='House of Representatives' ref='countryLegisLowerLayer'>
           <CongressionalDistricts elections={this.state.elections.country.legislativeLower}
                                   reps={this.state.countryLegislativeLower}
                                   layerControl={this}

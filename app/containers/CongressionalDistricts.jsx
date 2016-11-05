@@ -17,15 +17,15 @@ export default class GeoJsonLayer extends React.Component {
       country: 'US',
       adminSubdiv1: '',
       reps: props.reps,
-      elections: props.elections,
+      candidates: props.elections,
       electionColorDelay: props.electionColorDelay,
       ticks: 0,
-      popupContent: {
-        office: '',
-        reps: [],
-        state: '',
-        district: ''
-      }
+      // popupContent: {
+      //   office: '',
+      //   reps: [],
+      //   state: '',
+      //   district: ''
+      // }
     }
 
     this.onEachFeature = this.onEachFeature.bind(this)
@@ -41,7 +41,7 @@ export default class GeoJsonLayer extends React.Component {
     const stateFIPS = geoId.substring(0, 2)
     const state = fipsToState[stateFIPS]
     const dist = (geoId.substring(2, geoId.length) === '00') ? 1 : parseInt(geoId.substring(2, geoId.length))
-    const stateDoc = this.state.elections[state]
+    const stateDoc = this.state.candidates[state]
     const distDoc = stateDoc[dist]
     const territories = ['DC', 'PR', 'GU', 'VI', 'AS', 'UM', 'MP']
 
@@ -49,8 +49,8 @@ export default class GeoJsonLayer extends React.Component {
       return {
         fillColor: this.getColor(state, dist),
         fillOpacity: 0.4,
-        stroke: distDoc.length > 0,
-        color: null,
+        color: 'red',
+        opacity: distDoc.length > 0 ? 0.5 : 0,
         weight: 1.5,
         className: distDoc.length > 0 ? 'election-status-active' : 'election-status-inactive'
       }
@@ -60,16 +60,22 @@ export default class GeoJsonLayer extends React.Component {
   }
 
   getColor(state, dist) {
-    const rep = this.state.reps[state][dist]
-    const party = rep.party
+    if (typeof this.state.reps[state] === 'undefined' || typeof this.state.reps[state][dist] === 'undefined') {
+      // console.log(`${state} ${dist}`)
+      // GA 7 is undefined
+      return 'eeeeee';
+    } else {
+      const rep = this.state.reps[state][dist]
+      const party = rep.party
 
-    switch (party) {
-      case 'Democratic':
-        return '#0000ff';
-      case 'Republican':
-        return '#ff0000';
-      default:
-        return 'eeeeee';
+      switch (party) {
+        case 'Democratic':
+          return '#0000ff';
+        case 'Republican':
+          return '#ff0000';
+        default:
+          return 'eeeeee';
+      }
     }
   }
 
@@ -80,18 +86,28 @@ export default class GeoJsonLayer extends React.Component {
     const state = fipsToState[stateFIPS]
     const dist = (geoId.substring(2, geoId.length) === '00') ? 1 : parseInt(geoId.substring(2, geoId.length))
 
-    component.setState({ popupContent: {
-        office: 'US House of Representatives',
-        reps: component.state.reps[state][dist]
-      }
-    })
+    // component.setState({ popupContent: {
+    //     office: 'US House of Representatives',
+    //     reps: component.state.reps[state][dist]
+    //   }
+    // })
+
+    component.props.layerControl.props.onSelect({
+      reps: [component.state.reps[state][dist]],
+      country: component.state.country,
+      state: state,
+      district: Object.keys(component.state.reps[state]).length === 1 ? 'At-large' : dist,
+      levelOfGov: component.state.levelOfGov,
+      branchOfGov: component.state.branchOfGov,
+    }, component.state.candidates[state][dist])
   }
 
   highlightFeature(e) {
     const geoId = e.target.feature.properties.GEOID
     // this.setState({ electionColor: true })
     this.setState({ mousedOverFeature: geoId })
-    e.target.setStyle({ color: '#000000', 'opacity': 0.5 })
+    e.target.setStyle({ color: '#000000', 'opacity': 0.5, 'weight': 2.0 })
+    e.target.bringToFront()
   }
 
   resetHighlight(e) {
@@ -114,7 +130,7 @@ export default class GeoJsonLayer extends React.Component {
                ref="geojson"
                style={this.style}>
 
-               <PopupContainer content={this.state.popupContent}/>
+               {/*<PopupContainer content={this.state.popupContent}/>*/}
       </GeoJson>
     )
   }

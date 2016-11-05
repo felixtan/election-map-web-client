@@ -59,7 +59,7 @@ module.exports = {
         loader: 'json',
         include: [APP, NODE_MODULES]
       },
-      { test: /.js$/,
+      { test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader"
       }

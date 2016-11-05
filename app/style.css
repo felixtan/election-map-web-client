@@ -13,3 +13,37 @@
 @import 'styles/base/image';
 
 /* Component styles */
+.leaflet-container {
+  height: 100%;
+  margin: 0 auto;
+}
+
+.sidebar-content {
+  overflow: scroll !important;
+  cursor: text;
+}
+
+@keyframes notificationBlink {
+  0% { opacity: 0; }
+  50% { opacity: 1.0; }
+  100% { opacity: 0; }
+}
+
+.notification-blink {
+  animation-name: notificationBlink;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 2;
+  animation-duration: 0.5s;
+}
+
+#profile-load-notification {
+  position: absolute;
+  display: block;
+  opacity: 0;
+  margin-top: -20px;
+  margin-left: 20px;
+  background-color: red;
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+}

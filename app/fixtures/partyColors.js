@@ -3,6 +3,6 @@ export default {
   "REP": "#ff0000",    // red
   "LIB": "#ffd700",    // gold
   "GRE": "#00B45D",    // green
-  "IND": "#000000"     // black
-  // "IND": "#eeeeee",    // gray
+  "IND": "#566573",    // gray
+  "CON": "#7D017D",    // purple
 }

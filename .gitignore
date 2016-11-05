@@ -12,5 +12,5 @@ node_modules
 server/utils/co*
 server/utils/state*
 server/utils/FEC*
-server/utils/party*
+server/utils/party
 server/scripts/

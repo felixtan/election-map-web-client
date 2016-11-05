@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
-import { Map } from 'react-leaflet'
+import { Map, ZoomControl } from 'react-leaflet'
 import BaseMapLayer from './BaseMap'
 import LayerControl from './LayerControl'
+import Sidebar from './Sidebar.jsx'
 
 // TODO: make sure the transition time is the same as this.state.electionColorDelay
 require('../styles/components/electionColor.css')
+// require('../../node_modules/leaflet/dist/leaflet.css')
 
 export default class PoliticsMap extends React.Component {
 
@@ -17,11 +19,24 @@ export default class PoliticsMap extends React.Component {
         style: {
           height: "100%",
           width: "100%",
+          // position: "relative"
           position: "absolute",
         },
+        selected: null,
+        candidates: null
     }
 
-    // console.log(this.addTo)
+    this.onSelect = this.onSelect.bind(this)
+    // console.log(this)
+  }
+
+  onSelect(selected, candidates) {
+    this.setState({ selected: selected, candidates: candidates })
+    // console.log(this.state)
+  }
+
+  componentDidMount() {
+    this.refs.map.leafletElement.invalidateSize()
   }
 
   render () {
@@ -30,10 +45,13 @@ export default class PoliticsMap extends React.Component {
            zoom={this.state.zoom}
            style={this.state.style}
            scrollWheelZoom={true}
+           zoomControl={false}
            ref="map">
 
+           <ZoomControl position='topright' />
            <BaseMapLayer />
-           <LayerControl />
+           <LayerControl onSelect={this.onSelect} />
+           <Sidebar selected={this.state.selected} candidates={this.state.candidates} />
       </Map>
     )
   }
