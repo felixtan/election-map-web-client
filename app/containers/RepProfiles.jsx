@@ -10,10 +10,8 @@ export default class RepInfo extends React.Component {
     super(props)
     this.state = {
       selected: props.selected,
-      candidates: props.candidates
+      elections: props.elections
     }
-    // this.context.map = props.map
-    // console.log(this)
 
     this.getNumberSuffix = this.getNumberSuffix.bind(this)
     this.getOfficeTitle = this.getOfficeTitle.bind(this)
@@ -60,7 +58,7 @@ export default class RepInfo extends React.Component {
       || this.state.selected.levelOfGov !== nextProps.selected.levelOfGov
       || this.state.selected.state !== nextProps.selected.state
       || this.state.selected.district !== nextProps.selected.district) {
-      this.setState({ selected: nextProps.selected, candidates: nextProps.candidates })
+      this.setState({ selected: nextProps.selected, elections: nextProps.elections })
     }
     // console.log(this.state)
   }
@@ -116,7 +114,7 @@ export default class RepInfo extends React.Component {
   }
 
   activeElections() {
-    return this.state.candidates.length > 0
+    return (typeof this.state.elections.candidates !== 'undefined' && this.state.elections.candidates.length > 0)
   }
 
   candidatesSectionStyle() {
@@ -130,7 +128,8 @@ export default class RepInfo extends React.Component {
   }
 
   render() {
-    let incumbents, candidates;
+    let incumbents = []
+    let candidates = [];
 
     // const listStyle = {
     //   listStyleType: 'none',
@@ -140,10 +139,12 @@ export default class RepInfo extends React.Component {
     if (this.state.selected === null) {
       return (<h2>Select an area.</h2>)
     } else {
-      if (this.state.candidates !== null && this.state.candidates.length > 0) {
-        candidates = this.state.candidates.map((can, index, cans) => {
+      // console.log(this.state.elections)
+      if (this.state.elections !== null && typeof this.state.elections.candidates !== 'undefined' && this.state.elections.candidates.length > 0) {
+        candidates = this.state.elections.candidates.map((can, index, cans) => {
           return (
             <Profile rep={can}
+                     type="candidate"
                      country={this.state.selected.country}
                      state={this.state.selected.state}
                      district={this.state.selected.district}
@@ -151,16 +152,19 @@ export default class RepInfo extends React.Component {
                      last={cans.length-1} />
           )
         })
+        // console.log(candidates)
       }
 
       incumbents = this.state.selected.reps.map((rep, index, reps) => {
         return (
           <Profile rep={rep}
+                   type="incumbent"
                    country={this.state.selected.country}
                    state={this.state.selected.state}
                    district={this.state.selected.district}
                    key={index}
-                   last={reps.length-1} />)
+                   last={reps.length-1}
+                   candidates={this.state.elections.candidates} />)
       })
 
       // {/* To render multiple elements, wrap them inside a container */}

@@ -457,7 +457,7 @@ function xformCandidate(FEC_candidate) {
   const fec = FEC_candidate;
   return {
     name: prettifyName(fec.can_nam),
-    // name: fec.can_nam,
+    status: fec.can_inc_cha_ope_sea,
     address: [{
       line1: fec.can_str1,
       line2: fec.can_str2,
@@ -489,9 +489,38 @@ function printPrettyCandidates(mapOfPartyToCandidate) {
 }
 
 function validateAndPrettifyFECData(C) {
-  return Promise.each(C, (c, i) => {
-    C[i] = xformCandidate(c);
-  });
+  // WORKS, but just returns an array of candidates
+  // return Promise.each(C, (c, i) => {
+  //   C[i] = xformCandidate(c);
+  // });
+
+  return Promise.reduce(C, (res, c, i) => {
+
+    // array of candidate objects
+    if (typeof res.candidates === 'undefined') res.candidates = [];
+
+    // Array of urls
+    if (typeof res.pollsSources === 'undefined') res.pollsSources = [];
+
+
+    /* members of mostRecentPolls are {}
+       structure of members: { source: "",
+                               date: "",
+                               polls: {
+                                  REP: {
+                                      name: "",
+                                      pct: 100,
+                                      index: index in res.candidates
+                                  },
+                                  DEM: { ... }
+                               }
+                             }
+    */
+    if (typeof mostRecentPolls === 'undefined') res.mostRecentPolls = [];
+
+    res.candidates.push(xformCandidate(c));
+    return res;
+  }, {});
 }
 
 function validateAndPrettifyS(S) {
@@ -619,6 +648,8 @@ validateAndArrangeByOffice(FEC_Candidates_Data).then(res => {
     delete federalElections.H['AK']['NaN'];
     delete federalElections.H['AS']['NaN'];
     delete federalElections.H['CO'][''];
+    delete federalElections.H['PR'][98];
+    delete federalElections.H['DC'][98];
 
     // Had wrong candidate
     _.each(federalElections.H['TX'][14], (can, i, cans) => {
@@ -650,7 +681,10 @@ validateAndArrangeByOffice(FEC_Candidates_Data).then(res => {
         adminSubdiv1: {},
       };
 
+      // console.log(doc.country.legislativeLower['GA']);
+
       const collectionName = 'elections';
+      // CREATING
       db.collection(collectionName).insert(doc, (err, result) => {
         if (err) throw err;
         console.log(result);

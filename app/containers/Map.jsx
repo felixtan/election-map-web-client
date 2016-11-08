@@ -23,15 +23,15 @@ export default class PoliticsMap extends React.Component {
           position: "absolute",
         },
         selected: null,
-        candidates: null
+        elections: null
     }
 
     this.onSelect = this.onSelect.bind(this)
     // console.log(this)
   }
 
-  onSelect(selected, candidates) {
-    this.setState({ selected: selected, candidates: candidates })
+  onSelect(selected, elections) {
+    this.setState({ selected: selected, elections: elections })
     // console.log(this.state)
   }
 
@@ -51,7 +51,7 @@ export default class PoliticsMap extends React.Component {
            <ZoomControl position='topright' />
            <BaseMapLayer />
            <LayerControl onSelect={this.onSelect} />
-           <Sidebar selected={this.state.selected} candidates={this.state.candidates} />
+           <Sidebar selected={this.state.selected} elections={this.state.elections} />
       </Map>
     )
   }

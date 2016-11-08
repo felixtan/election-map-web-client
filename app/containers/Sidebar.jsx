@@ -10,7 +10,7 @@ export default class SidebarContainer extends React.Component {
     super(props)
     this.state = {
       selected: props.selected,
-      candidates: props.candidates
+      elections: props.elections
     }
 
     this.onMouseOver = this.onMouseOver.bind(this)
@@ -32,7 +32,7 @@ export default class SidebarContainer extends React.Component {
       || this.state.selected.levelOfGov !== nextProps.selected.levelOfGov
       || this.state.selected.state !== nextProps.selected.state
       || this.state.selected.district !== nextProps.selected.district) {
-      this.setState({ selected: nextProps.selected, candidates: nextProps.candidates })
+      this.setState({ selected: nextProps.selected, elections: nextProps.elections })
 
       // Notify the user that profile data is loading in the sidebar
       if (_.includes(document.getElementById('sidebar').className, 'collapsed')) {
@@ -74,7 +74,7 @@ export default class SidebarContainer extends React.Component {
                       <span id='profile-load-notification' style={notificationStyle()}></span>
                     </a>
                   </li>
-                  <li><a href="#ballot" role="tab"><i className="fa fa-check-square-o"></i></a></li>
+                  {/*<li><a href="#ballot" role="tab"><i className="fa fa-check-square-o"></i></a></li>*/}
               </ul>
           </div>
 
@@ -88,12 +88,12 @@ export default class SidebarContainer extends React.Component {
                       <span className="sidebar-close"><i className="fa fa-caret-left"></i></span>
                   </h1>
 
-                  <RepProfiles selected={this.state.selected} candidates={this.state.candidates} />
+                  <RepProfiles selected={this.state.selected} elections={this.state.elections} />
               </div>
 
-              <div className="sidebar-pane" id="ballot">
+              {/*<div className="sidebar-pane" id="ballot">
                   <h1 className="sidebar-header">Ballot Lookup<span className="sidebar-close"><i className="fa fa-caret-left"></i></span></h1>
-              </div>
+              </div>*/}
           </div>
       </div>
     )

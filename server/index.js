@@ -39,7 +39,7 @@ app.get('/api/v1/:levelOfGov/:branchOfGov/:role/:country', (req, res) => {
         res.status(400).json({ msg: 'Invalid role in request url' });
       }
     } else if (q.branchOfGov === 'executive') {
-      db.collection('countryExecutives').findOne().then(data => { res.json(data); });
+      db.collection('countryExecutives').findOne({ iso_a2: q.country }).then(data => { res.json(data); });
     } else {
       res.status(400).json({ msg: 'Invalid branchOfGov in request url' });
     }

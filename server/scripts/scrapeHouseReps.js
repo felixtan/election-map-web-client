@@ -29,8 +29,7 @@ MongoClient.connect(dbconfig.uri, (err, db) => {
   console.log(`Connected to mongo database ${dbconfig.dbname}`);
 
   let doc = {};
-  // const n = districtsPerState['NY'];
-  // const stateIndex = states.indexOf("NY");
+  
   Promise.map(states, state => {
     return mapStateToHouseReps(state, districtsPerState[state]).then(data => {
       doc[state] = data;

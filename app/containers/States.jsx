@@ -20,13 +20,7 @@ export default class GeoJsonLayer extends React.Component {
       country: 'US',
       adminSubdiv1: '',
       reps: props.reps,
-      candidates: props.elections,
-      // popupContent: {
-      //   office: '',
-      //   reps: [],
-      //   state: '',
-      //   district: ''
-      // },
+      elections: props.elections,
       electionColorDelay: props.electionColorDelay,
       ticks: 0,
       levelOfGov: 'country',
@@ -43,16 +37,29 @@ export default class GeoJsonLayer extends React.Component {
 
   style (feature) {
     const state = feature.properties.STUSPS
-    const pattern = this.state.defaultPatterns[state]
+    const candidates = this.state.elections[state].candidates
     const territories = ['DC', 'AS', 'PR', 'GU', 'MP', 'UM', 'VI']
+    // if (typeof candidates === 'undefined') console.log(this.state.elections[state])
+    // if (typeof candidates === 'undefined') console.log(state)
 
-    return {
-      fillPattern: pattern,
-      fillOpacity: 0.4,
-      color: _.includes(territories, state) ? "black" : 'red',
-      opacity: this.state.candidates[state].length > 0 ? 0.5 : 0,
-      weight: 2.0,
-      className: this.state.candidates[state].length > 0 ? 'election-status-active' : 'election-status-inactive'
+    if (!_.includes(territories, state)) {
+      const pattern = this.state.defaultPatterns[state]
+      return {
+        fillPattern: pattern,
+        fillOpacity: 0.4,
+        color: 'red',
+        opacity: (Array.isArray(candidates) && candidates.length > 0) ? 0.5 : 0,
+        weight: 2.0,
+        className: (Array.isArray(candidates) && candidates.length > 0) ? 'election-status-active' : 'election-status-inactive'
+      }
+    } else {
+      return {
+        fillColor: 'black',
+        fillOpacity: 0.4,
+        opacity: 0,
+        weight: 2.0,
+        className: 'election-status-inactive'
+      }
     }
   }
 
@@ -74,7 +81,7 @@ export default class GeoJsonLayer extends React.Component {
     //   district: null
     // }})
 
-    // console.log(component.state.candidates)
+    // console.log(component.state.elections)
     component.props.layerControl.props.onSelect({
       reps: component.state.reps[state],
       country: component.state.country,
@@ -82,7 +89,7 @@ export default class GeoJsonLayer extends React.Component {
       district: null,
       levelOfGov: component.state.levelOfGov,
       branchOfGov: component.state.branchOfGov,
-    }, component.state.candidates[state])
+    }, component.state.elections[state])
   }
 
   highlightFeature(e) {

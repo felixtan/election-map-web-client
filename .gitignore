@@ -10,7 +10,6 @@ node_modules
 
 #server
 server/utils/co*
-server/utils/state*
 server/utils/FEC*
 server/utils/party
-server/scripts/
+server/scripts/*

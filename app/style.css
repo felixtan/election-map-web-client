@@ -47,3 +47,9 @@
   width: 10px;
   border-radius: 100%;
 }
+
+/* For Rep profiles: highlight the incumbent whose seat is up for reelection */
+.seat-up-for-election {
+  border-style: solid;
+  border-color: red;
+}

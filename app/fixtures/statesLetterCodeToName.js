@@ -1,4 +1,4 @@
-const a = {
+export default {
   "AL": "Alabama",
   "AK": "Alaska",
   "AZ": "Arizona",
@@ -56,5 +56,3 @@ const a = {
   "PR": "Puerto Rico",   // Puerto Rico
   "VI": "US Virgin Islands",   // Virgin Islands
 }
-
-export default a

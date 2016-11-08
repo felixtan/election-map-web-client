@@ -39,9 +39,12 @@ export default class LayerControl extends React.Component {
         console.error(res)
       }
 
-      res.json().then(reps => {
-        delete reps._id
-        this.setState({ countryExecutives: reps })
+      res.json().then(data => {
+        // delete data._id
+        this.setState({
+          countryName: data.name,
+          countryExecutives: data.representatives
+        })
         // console.log(this.state)
       }, err => {
         console.error(err)

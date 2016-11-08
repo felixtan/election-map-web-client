@@ -17,15 +17,9 @@ export default class GeoJsonLayer extends React.Component {
       country: 'US',
       adminSubdiv1: '',
       reps: props.reps,
-      candidates: props.elections,
+      elections: props.elections,
       electionColorDelay: props.electionColorDelay,
       ticks: 0,
-      // popupContent: {
-      //   office: '',
-      //   reps: [],
-      //   state: '',
-      //   district: ''
-      // }
     }
 
     this.onEachFeature = this.onEachFeature.bind(this)
@@ -40,19 +34,23 @@ export default class GeoJsonLayer extends React.Component {
     const geoId = feature.properties.GEOID
     const stateFIPS = geoId.substring(0, 2)
     const state = fipsToState[stateFIPS]
-    const dist = (geoId.substring(2, geoId.length) === '00') ? 1 : parseInt(geoId.substring(2, geoId.length))
-    const stateDoc = this.state.candidates[state]
-    const distDoc = stateDoc[dist]
+    const dist = (geoId.substring(2, geoId.length) === '00' || state === 'DC' || state === 'PR') ? 1 : parseInt(geoId.substring(2, geoId.length))
+    const stateDoc = this.state.elections[state]
+    // if (typeof stateDoc[dist] === 'undefined') console.log(`geo${geoId} dist:${dist} state:${state}`)
+    // if (typeof stateDoc[dist] === 'undefined') console.log(stateDoc)
+    const cans = stateDoc[dist].candidates
     const territories = ['DC', 'PR', 'GU', 'VI', 'AS', 'UM', 'MP']
 
+    //  && (dist !== 98 || dist !== 7 && state !== 'GA')
     if (!_.includes(territories, state) && geoId !== this.state.mousedOverFeature) {
+      // console.log(distDoc)
       return {
         fillColor: this.getColor(state, dist),
         fillOpacity: 0.4,
         color: 'red',
-        opacity: distDoc.length > 0 ? 0.5 : 0,
+        opacity: cans.length > 0 ? 0.5 : 0,
         weight: 1.5,
-        className: distDoc.length > 0 ? 'election-status-active' : 'election-status-inactive'
+        className: cans.length > 0 ? 'election-status-active' : 'election-status-inactive'
       }
     } else {
       return {}
@@ -99,7 +97,7 @@ export default class GeoJsonLayer extends React.Component {
       district: Object.keys(component.state.reps[state]).length === 1 ? 'At-large' : dist,
       levelOfGov: component.state.levelOfGov,
       branchOfGov: component.state.branchOfGov,
-    }, component.state.candidates[state][dist])
+    }, component.state.elections[state][dist])
   }
 
   highlightFeature(e) {
