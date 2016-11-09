@@ -8,6 +8,7 @@ const partyNameToCode = _.reduce(partyCodeToName, (res, name, code) => {
 }, {})
 
 const normalizePartyName = (name) => {
+  // console.log(name)
   return (!_.includes(name, 'Party') && name !== 'Independent') ? `${name} Party` : name
 }
 
@@ -29,6 +30,7 @@ const profileStyle = (index, last) => {
 
 const partyColorBarStyle = (partyName) => {
   // console.log(partyName)
+  // console.log(partyCodeToColor[partyNameToCode[partyName]])
   return {
     backgroundColor: partyCodeToColor[partyNameToCode[partyName]],
     borderRadius: '50px',
@@ -46,16 +48,21 @@ const filter = (props) => {
 
 const getIncumbentCSSClass = (props) => {
   // console.log(props)
-  const incumbentName = props.rep.name.split(' ')
-  const incumbentLastName = incumbentName[incumbentName.length-1]
-  const incumbentParty = props.rep.party
-
   let seatUpForElection = false
 
-  if (typeof props.candidates !== 'undefined' && Array.isArray(props.candidates) && props.candidates.length > 0) {
-    seatUpForElection = _.includes((_.find(props.candidates, can => {
-      return _.includes(can.party, incumbentParty)
-    })).name, incumbentLastName)
+  if ((props.rep !== null && props.rep !== undefined) &&
+      props.rep.name !== undefined &&
+      props.rep.name !== null &&
+      props.rep.name !== 'Vacant') {
+    const incumbentName = props.rep.name.split(' ')
+    const incumbentLastName = incumbentName[incumbentName.length-1]
+    const incumbentParty = props.rep.party
+
+    if (typeof props.candidates !== 'undefined' && Array.isArray(props.candidates) && props.candidates.length > 0) {
+      seatUpForElection = _.includes((_.find(props.candidates, can => {
+        return _.includes(can.party, incumbentParty)
+      })).name, incumbentLastName)
+    }
   }
 
   /*
@@ -72,8 +79,14 @@ const getIncumbentCSSClass = (props) => {
     LA: "David Vitter"
   }
 
-  if (_.includes(Object.keys(open), props.state)) {
+  if (_.includes(Object.keys(open), props.state) && incumbentLastName !== undefined) {
     seatUpForElection = _.includes(open[props.state], incumbentLastName)
+  }
+
+  if (props.country === 'US' &&
+      props.levelOfGov === 'country' &&
+      (props.branchOfGov === 'legislativeLower' || props.branchOfGov === 'executive')) {
+    seatUpForElection = true
   }
 
   if (seatUpForElection) {
@@ -117,6 +130,22 @@ export default function Sidebar(props, context) {
           <h5>{props.rep.name}</h5>
           <h6>{normalizePartyName(props.rep.party)}</h6>
           <div className="party-color-bar" style={partyColorBarStyle(normalizePartyName(props.rep.party))}></div>
+
+          {/*<div className="w3-row">
+            <div className="w3-container w3-quarter">
+
+            </div>
+            <div className="w3-container w3-quarter">
+              <h2>w3-quarter</h2>
+            </div>
+            <div className="w3-container w3-quarter">
+              <h2>w3-quarter</h2>
+            </div>
+            <div className="w3-container w3-quarter">
+              <h2>w3-quarter</h2>
+            </div>
+          </div>*/}
+
         </div>
       </li>
     )

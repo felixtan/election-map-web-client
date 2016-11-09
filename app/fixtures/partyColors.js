@@ -5,4 +5,7 @@ export default {
   "GRE": "#00B45D",    // green
   "IND": "#566573",    // gray
   "CON": "#7D017D",    // purple
+
+  // PR
+  "NPP": "#0000ff"
 }

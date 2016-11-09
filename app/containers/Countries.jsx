@@ -100,12 +100,21 @@ export default class GeoJsonLayer extends React.Component {
     this.setState({ mousedOverFeature: country })
     e.target.setStyle({ color: '#000000', 'opacity': 0.5, 'weight': 3.0 })
     e.target.bringToFront()
+
+    this.props.layerControl.props.onHover({
+      country: country,
+      state: null,
+      district: null,
+      levelOfGov: this.state.levelOfGov,
+      branchOfGov: this.state.branchOfGov,
+    })
   }
 
   resetHighlight(e) {
     // this.setState({ electionColor: true })
     this.setState({ mousedOverFeature: null })
     this.refs.geojson.leafletElement.resetStyle(e.target)
+    this.props.layerControl.props.onHover(null)
   }
 
   onEachFeature(component, feature, layer) {

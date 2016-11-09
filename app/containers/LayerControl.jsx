@@ -158,7 +158,7 @@ export default class LayerControl extends React.Component {
     }
 
     return (
-      <LayersControl ref='layerControl'>
+      <LayersControl ref='layerControl' className='branch-control'>
         <LayersControl.BaseLayer name='Executive' checked={true} ref='countryExecLayer' >
           <Countries elections={this.state.elections.country.executive}
                      reps={this.state.countryExecutives}

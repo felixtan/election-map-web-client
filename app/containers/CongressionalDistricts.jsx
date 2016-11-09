@@ -42,7 +42,7 @@ export default class GeoJsonLayer extends React.Component {
     const territories = ['DC', 'PR', 'GU', 'VI', 'AS', 'UM', 'MP']
 
     //  && (dist !== 98 || dist !== 7 && state !== 'GA')
-    if (!_.includes(territories, state) && geoId !== this.state.mousedOverFeature) {
+    if (!_.includes(territories, state)) {
       // console.log(distDoc)
       return {
         fillColor: this.getColor(state, dist),
@@ -82,14 +82,12 @@ export default class GeoJsonLayer extends React.Component {
     const geoId = feature.properties.GEOID
     const stateFIPS = geoId.substring(0, 2)
     const state = fipsToState[stateFIPS]
-    const dist = (geoId.substring(2, geoId.length) === '00') ? 1 : parseInt(geoId.substring(2, geoId.length))
+    let dist = (geoId.substring(2, geoId.length) === '00') ? 1 : parseInt(geoId.substring(2, geoId.length))
 
-    // component.setState({ popupContent: {
-    //     office: 'US House of Representatives',
-    //     reps: component.state.reps[state][dist]
-    //   }
-    // })
+    // for some reason, it's 98
+    if (state === 'PR' || state === 'DC') dist = 1
 
+    // console.log(component.state.elections[state])
     component.props.layerControl.props.onSelect({
       reps: [component.state.reps[state][dist]],
       country: component.state.country,
@@ -101,16 +99,29 @@ export default class GeoJsonLayer extends React.Component {
   }
 
   highlightFeature(e) {
-    const geoId = e.target.feature.properties.GEOID
-    // this.setState({ electionColor: true })
-    this.setState({ mousedOverFeature: geoId })
+    const feature = e.target.feature
+    const geoId = feature.properties.GEOID
+    const stateFIPS = geoId.substring(0, 2)
+    const state = fipsToState[stateFIPS]
+    let dist = (geoId.substring(2, geoId.length) === '00') ? 1 : parseInt(geoId.substring(2, geoId.length))
+
     e.target.setStyle({ color: '#000000', 'opacity': 0.5, 'weight': 2.0 })
     e.target.bringToFront()
+
+    this.props.layerControl.props.onHover({
+      // reps: [this.state.reps[state][dist]],
+      country: this.state.country,
+      state: state,
+      district: Object.keys(this.state.reps[state]).length === 1 ? 'At-large' : dist,
+      levelOfGov: this.state.levelOfGov,
+      branchOfGov: this.state.branchOfGov,
+    })
   }
 
   resetHighlight(e) {
     this.setState({ mousedOverFeature: null })
     this.refs.geojson.leafletElement.resetStyle(e.target)
+    this.props.layerControl.props.onHover(null)
   }
 
   onEachFeature (component, feature, layer) {

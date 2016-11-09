@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
-import { MapControl } from 'react-leaflet'
 import Profile from '../components/RepProfile'
 import stateCodeToName from '../fixtures/statesLetterCodeToName'
 import countryCodeToNames from '../fixtures/countryISOA2toNames'
+import { getCongressionalDistrictName } from '../utils/helpers'
 
 export default class RepInfo extends React.Component {
   constructor(props) {
@@ -13,41 +13,9 @@ export default class RepInfo extends React.Component {
       elections: props.elections
     }
 
-    this.getNumberSuffix = this.getNumberSuffix.bind(this)
     this.getOfficeTitle = this.getOfficeTitle.bind(this)
     this.activeElections = this.activeElections.bind(this)
     this.candidatesSectionStyle = this.candidatesSectionStyle.bind(this)
-    this.getCongressionalDistrictName = this.getCongressionalDistrictName.bind(this)
-  }
-
-  getNumberSuffix(districtNum) {
-    const n = typeof districtNum === 'string' ? districtNum : districtNum.toString()
-    const lastDigit = n[n.length-1]
-    const lastTwoDigits = n.length >= 2 ? n.substring(n.length-2, n.length) : undefined
-
-    // st
-    // nd
-    // rd
-    // th
-
-    if (n.length >= 2 && (lastTwoDigits == 11 || lastTwoDigits == 12)) {
-      return 'th'
-    } else {
-      switch(lastDigit) {
-        case '1':
-          return 'st'
-          break
-        case '2':
-          return 'nd'
-          break
-        case '3':
-          return 'rd'
-          break
-        default:
-          return 'th'
-      }
-    }
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,17 +31,16 @@ export default class RepInfo extends React.Component {
     // console.log(this.state)
   }
 
-
-
   // This is temporary
   // TODO: update each rep object to store office title
   getOfficeTitle(rep) {
+    // console.log(rep)
     if (typeof rep.office === 'undefined' || rep.office === null || (typeof rep.office === 'string' && rep.office.length === 0)) {
       if (this.state.selected.levelOfGov === 'country') {
         if (this.state.selected.branchOfGov === 'legislativeUpper') {
           return `${countryCodeToNames[this.state.selected.country].informal} Senator from ${stateCodeToName[this.state.selected.state]}`
         } else if (this.state.selected.branchOfGov === 'legislativeLower') {
-          return `${countryCodeToNames[this.state.selected.country].informal} Representative from the ${this.getCongressionalDistrictName()} Congressional District of ${stateCodeToName[this.state.selected.state]}`
+          return `${countryCodeToNames[this.state.selected.country].informal} Representative from the ${getCongressionalDistrictName(this.state.selected.district)} Congressional District of ${stateCodeToName[this.state.selected.state]}`
         } else {
           return 'Unhandled Office'
         }
@@ -82,16 +49,6 @@ export default class RepInfo extends React.Component {
       }
     } else {
       return rep.office + " of America"
-    }
-  }
-
-  getCongressionalDistrictName() {
-    if (this.state.selected.district !== null) {
-      if (!isNaN(this.state.selected.district)) {
-        return `${this.state.selected.district}${this.getNumberSuffix(this.state.selected.district)}`
-      } else {
-        return this.state.selected.district
-      }
     }
   }
 
@@ -104,7 +61,7 @@ export default class RepInfo extends React.Component {
       } else if (this.state.selected.branchOfGov === 'legislativeUpper') {
         return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} Senate Election in ${stateCodeToName[this.state.selected.state]}`
       } else if (this.state.selected.branchOfGov === 'legislativeLower') {
-        return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} House of Representatives Election in the ${this.getCongressionalDistrictName()} Congressional District of ${stateCodeToName[this.state.selected.state]}`
+        return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} House of Representatives Election in the ${getCongressionalDistrictName(this.state.selected.district)} Congressional District of ${stateCodeToName[this.state.selected.state]}`
       } else {
         return `Undhandled election name for levelOfGov=country, branchOfGov=${this.state.selected.branchOfGov}`
       }
@@ -139,7 +96,7 @@ export default class RepInfo extends React.Component {
     if (this.state.selected === null) {
       return (<h2>Select an area.</h2>)
     } else {
-      // console.log(this.state.elections)
+      // console.log(this.state)
       if (this.state.elections !== null && typeof this.state.elections.candidates !== 'undefined' && this.state.elections.candidates.length > 0) {
         candidates = this.state.elections.candidates.map((can, index, cans) => {
           return (
@@ -159,6 +116,8 @@ export default class RepInfo extends React.Component {
         return (
           <Profile rep={rep}
                    type="incumbent"
+                   levelOfGov={this.state.selected.levelOfGov}
+                   branchOfGov={this.state.selected.branchOfGov}
                    country={this.state.selected.country}
                    state={this.state.selected.state}
                    district={this.state.selected.district}

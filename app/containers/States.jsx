@@ -24,7 +24,10 @@ export default class GeoJsonLayer extends React.Component {
       electionColorDelay: props.electionColorDelay,
       ticks: 0,
       levelOfGov: 'country',
-      branchOfGov: 'legislativeUpper'
+      branchOfGov: 'legislativeUpper',
+
+      // US specific
+      territories: ['DC', 'AS', 'PR', 'GU', 'MP', 'UM', 'VI']
     }
 
     this.onEachFeature = this.onEachFeature.bind(this)
@@ -38,11 +41,10 @@ export default class GeoJsonLayer extends React.Component {
   style (feature) {
     const state = feature.properties.STUSPS
     const candidates = this.state.elections[state].candidates
-    const territories = ['DC', 'AS', 'PR', 'GU', 'MP', 'UM', 'VI']
     // if (typeof candidates === 'undefined') console.log(this.state.elections[state])
     // if (typeof candidates === 'undefined') console.log(state)
 
-    if (!_.includes(territories, state)) {
+    if (!_.includes(this.state.territories, state)) {
       const pattern = this.state.defaultPatterns[state]
       return {
         fillPattern: pattern,
@@ -74,22 +76,17 @@ export default class GeoJsonLayer extends React.Component {
     const geojson = component.refs.geojson.leafletElement
     const state = e.target.feature.properties.STUSPS
 
-    // component.setState({ popupContent: {
-    //   office: 'US Senate',
-    //   reps: component.state.reps[state],
-    //   state: statesLetterCodeToName[state],
-    //   district: null
-    // }})
-
     // console.log(component.state.elections)
-    component.props.layerControl.props.onSelect({
-      reps: component.state.reps[state],
-      country: component.state.country,
-      state: state,
-      district: null,
-      levelOfGov: component.state.levelOfGov,
-      branchOfGov: component.state.branchOfGov,
-    }, component.state.elections[state])
+    if (!_.includes(component.state.territories, state)) {
+      component.props.layerControl.props.onSelect({
+        reps: component.state.reps[state],
+        country: component.state.country,
+        state: state,
+        district: null,
+        levelOfGov: component.state.levelOfGov,
+        branchOfGov: component.state.branchOfGov,
+      }, component.state.elections[state])
+    }
   }
 
   highlightFeature(e) {
@@ -98,12 +95,22 @@ export default class GeoJsonLayer extends React.Component {
     this.setState({ mousedOverFeature: state })
     e.target.setStyle({ color: '#000000', 'opacity': 0.5, 'weight': 2.5 })
     e.target.bringToFront()
+
+    this.props.layerControl.props.onHover({
+      // reps: [this.state.reps[state][dist]],
+      country: this.state.country,
+      state: state,
+      district: null,
+      levelOfGov: this.state.levelOfGov,
+      branchOfGov: this.state.branchOfGov,
+    })
   }
 
   resetHighlight(e) {
     // this.setState({ electionColor: true })
     this.setState({ mousedOverFeature: null })
     this.refs.geojson.leafletElement.resetStyle(e.target)
+    this.props.layerControl.props.onHover(null)
   }
 
   onEachFeature (component, feature, layer) {

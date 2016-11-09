@@ -18,5 +18,8 @@ export default {
   "REP": "Republican Party",
   "VPP": "Vermont Progressive Party",
   "W": "Write-In",
-  "WFP": "Working Families Party"
+  "WFP": "Working Families Party",
+
+  // PR
+  "NPP": "New Progressive Party"
 }

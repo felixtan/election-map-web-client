@@ -35,8 +35,11 @@ export default class SidebarContainer extends React.Component {
       this.setState({ selected: nextProps.selected, elections: nextProps.elections })
 
       // Notify the user that profile data is loading in the sidebar
-      if (_.includes(document.getElementById('sidebar').className, 'collapsed')) {
-        document.getElementById('profile-load-notification').className = 'notification-blink'
+      // without this condition, it blinks on hover/mouseover
+      if (nextProps.selected !== null) {
+        if (_.includes(document.getElementById('sidebar').className, 'collapsed')) {
+          document.getElementById('profile-load-notification').className = 'notification-blink'
+        }
       }
     }
     // console.log(this.state)
@@ -59,10 +62,6 @@ export default class SidebarContainer extends React.Component {
   }
 
   render() {
-    function notificationStyle () {
-
-    }
-
     return (
       <div id="sidebar" className="sidebar collapsed" onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
           {/*<!-- Nav tabs -->*/}
@@ -71,7 +70,7 @@ export default class SidebarContainer extends React.Component {
                   <li>
                     <a href="#profile" role="tab">
                       <i className="fa fa-bars"></i>
-                      <span id='profile-load-notification' style={notificationStyle()}></span>
+                      <span id='profile-load-notification'></span>
                     </a>
                   </li>
                   {/*<li><a href="#ballot" role="tab"><i className="fa fa-check-square-o"></i></a></li>*/}
