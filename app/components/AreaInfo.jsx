@@ -38,7 +38,6 @@ export default function AreaInfo(props, context) {
   if (props.highlighted === null) {
     return (
       <div className='w3-container area-info' style={countryNameStyle()}>
-        Select an area
       </div>
     )
   } else {

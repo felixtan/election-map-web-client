@@ -54,6 +54,11 @@
   border-color: red;
 }
 
+.election-winner {
+  border-style: solid;
+  border-color: green;
+}
+
 .area-info {
     padding: 6px 8px;
     /*font: 14px/16px Arial, Helvetica, sans-serif;*/

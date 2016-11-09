@@ -33,7 +33,7 @@ export default class SidebarContainer extends React.Component {
       || this.state.selected.state !== nextProps.selected.state
       || this.state.selected.district !== nextProps.selected.district) {
       this.setState({ selected: nextProps.selected, elections: nextProps.elections })
-
+      // console.log(this.state)
       // Notify the user that profile data is loading in the sidebar
       // without this condition, it blinks on hover/mouseover
       if (nextProps.selected !== null) {

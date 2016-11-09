@@ -106,7 +106,9 @@ export default class RepInfo extends React.Component {
                      state={this.state.selected.state}
                      district={this.state.selected.district}
                      key={index}
-                     last={cans.length-1} />
+                     last={cans.length-1}
+                     candidates={this.state.elections.candidates}
+                     winner={this.state.elections.winner} />
           )
         })
         // console.log(candidates)

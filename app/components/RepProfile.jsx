@@ -46,16 +46,17 @@ const filter = (props) => {
   return !_.includes(partiesToFilter, props.rep.party)
 }
 
-const getIncumbentCSSClass = (props) => {
+const getIncumbentClassName = (props) => {
   // console.log(props)
   let seatUpForElection = false
+  let incumbentLastName = null
 
   if ((props.rep !== null && props.rep !== undefined) &&
       props.rep.name !== undefined &&
       props.rep.name !== null &&
       props.rep.name !== 'Vacant') {
     const incumbentName = props.rep.name.split(' ')
-    const incumbentLastName = incumbentName[incumbentName.length-1]
+    incumbentLastName = incumbentName[incumbentName.length-1]
     const incumbentParty = props.rep.party
 
     if (typeof props.candidates !== 'undefined' && Array.isArray(props.candidates) && props.candidates.length > 0) {
@@ -79,7 +80,7 @@ const getIncumbentCSSClass = (props) => {
     LA: "David Vitter"
   }
 
-  if (_.includes(Object.keys(open), props.state) && incumbentLastName !== undefined) {
+  if (_.includes(Object.keys(open), props.state) && incumbentLastName !== null) {
     seatUpForElection = _.includes(open[props.state], incumbentLastName)
   }
 
@@ -93,6 +94,22 @@ const getIncumbentCSSClass = (props) => {
     return "seat-up-for-election"
   } else {
     return
+  }
+}
+
+const getCandidateClassName = (props) => {
+  const winner = props.winner
+
+  if (winner === undefined || winner === null) return ""
+
+  const name = props.rep.name.split(' ')
+  const lastName = name[name.length-1]
+  const party = props.rep.party
+
+  if (_.includes(winner.name, lastName) && party === winner.party) {
+    return "election-winner"
+  } else {
+    return ""
   }
 }
 
@@ -111,7 +128,7 @@ export default function Sidebar(props, context) {
     if (filter(props)) {
       return (
         <li className="w3-container">
-          <img src={getImg()} style={picStyle} />
+          <img src={getImg()} className={getCandidateClassName(props)} style={picStyle} />
           <div className="w3-container w3-center">
             <h5>{props.rep.name}</h5>
             <h6>{props.rep.party}</h6>
@@ -125,7 +142,7 @@ export default function Sidebar(props, context) {
   } else if (props.type === 'incumbent') {
     return (
       <li className="w3-container">
-        <img src={getImg()} className={getIncumbentCSSClass(props)} style={picStyle} />
+        <img src={getImg()} className={getIncumbentClassName(props)} style={picStyle} />
         <div className="w3-container w3-center">
           <h5>{props.rep.name}</h5>
           <h6>{normalizePartyName(props.rep.party)}</h6>
