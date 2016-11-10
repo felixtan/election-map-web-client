@@ -10,16 +10,12 @@ export default class GeoJsonLayer extends React.Component {
     super(props)
     this.state = {
       layerControl: props.layerControl,
-      mousedOverFeature: null,
       geoData: congressionalDistricts,
       levelOfGov: 'country',
       branchOfGov: 'legislativeLower',
       country: 'US',
-      adminSubdiv1: '',
       reps: props.reps,
       elections: props.elections,
-      electionColorDelay: props.electionColorDelay,
-      ticks: 0,
     }
 
     this.onEachFeature = this.onEachFeature.bind(this)
@@ -38,12 +34,15 @@ export default class GeoJsonLayer extends React.Component {
     const stateDoc = this.state.elections[state]
     // if (typeof stateDoc[dist] === 'undefined') console.log(`geo${geoId} dist:${dist} state:${state}`)
     // if (typeof stateDoc[dist] === 'undefined') console.log(stateDoc)
-    const cans = stateDoc[dist].candidates
+    let cans = stateDoc[dist].candidates
     const territories = ['DC', 'PR', 'GU', 'VI', 'AS', 'UM', 'MP']
 
     //  && (dist !== 98 || dist !== 7 && state !== 'GA')
     if (!_.includes(territories, state)) {
-      // console.log(distDoc)
+      if (cans === undefined) {
+        console.log(`${state} ${dist}`)
+        cans = []
+      }
       return {
         fillColor: this.getColor(state, dist),
         fillOpacity: 0.4,
@@ -105,21 +104,19 @@ export default class GeoJsonLayer extends React.Component {
     const state = fipsToState[stateFIPS]
     let dist = (geoId.substring(2, geoId.length) === '00') ? 1 : parseInt(geoId.substring(2, geoId.length))
 
-    e.target.setStyle({ color: '#000000', 'opacity': 0.5, 'weight': 2.0 })
-    e.target.bringToFront()
-
     this.props.layerControl.props.onHover({
-      // reps: [this.state.reps[state][dist]],
       country: this.state.country,
       state: state,
       district: Object.keys(this.state.reps[state]).length === 1 ? 'At-large' : dist,
       levelOfGov: this.state.levelOfGov,
       branchOfGov: this.state.branchOfGov,
     })
+
+    e.target.setStyle({ color: '#000000', 'opacity': 0.5, 'weight': 2.0 })
+    e.target.bringToFront()
   }
 
   resetHighlight(e) {
-    this.setState({ mousedOverFeature: null })
     this.refs.geojson.leafletElement.resetStyle(e.target)
     this.props.layerControl.props.onHover(null)
   }

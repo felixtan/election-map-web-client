@@ -13,16 +13,11 @@ export default class GeoJsonLayer extends React.Component {
     this.state = {
       layerControl: props.layerControl,
       leafletMap: null,
-      mousedOverFeature: null,
       defaultPatterns: props.defaultPatterns,
-      electionPatterns: null,
       geoData: states,
       country: 'US',
-      adminSubdiv1: '',
       reps: props.reps,
       elections: props.elections,
-      electionColorDelay: props.electionColorDelay,
-      ticks: 0,
       levelOfGov: 'country',
       branchOfGov: 'legislativeUpper',
 
@@ -90,25 +85,21 @@ export default class GeoJsonLayer extends React.Component {
   }
 
   highlightFeature(e) {
-    // this.setState({ electionColor: false })
     const state = e.target.feature.properties.STUSPS
-    this.setState({ mousedOverFeature: state })
-    e.target.setStyle({ color: '#000000', 'opacity': 0.5, 'weight': 2.5 })
-    e.target.bringToFront()
 
     this.props.layerControl.props.onHover({
-      // reps: [this.state.reps[state][dist]],
       country: this.state.country,
       state: state,
       district: null,
       levelOfGov: this.state.levelOfGov,
       branchOfGov: this.state.branchOfGov,
     })
+
+    e.target.setStyle({ color: '#000000', 'opacity': 0.5, 'weight': 2.5 })
+    e.target.bringToFront()
   }
 
   resetHighlight(e) {
-    // this.setState({ electionColor: true })
-    this.setState({ mousedOverFeature: null })
     this.refs.geojson.leafletElement.resetStyle(e.target)
     this.props.layerControl.props.onHover(null)
   }

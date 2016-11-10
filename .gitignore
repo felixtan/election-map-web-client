@@ -8,8 +8,5 @@ node_modules
 *.log
 *.gz
 
-#server
-server/utils/co*
-server/utils/FEC*
-server/utils/party
+#server scripts
 server/scripts/*

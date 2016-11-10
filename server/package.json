@@ -25,6 +25,7 @@
     "babel-preset-es2015": "^6.16.0",
     "eslint": "^3.7.1",
     "gulp-babel": "^6.1.2",
+    "js-beautify": "^1.6.4",
     "nodemon": "^1.11.0"
   }
 }

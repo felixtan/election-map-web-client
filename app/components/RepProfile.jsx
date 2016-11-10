@@ -1,5 +1,5 @@
 import React from 'react'
-import partyCodeToName from '../../server/utils/partyCodesToName'
+import partyCodeToName from '../../server/data/partyCodeToName'
 import partyCodeToColor from '../fixtures/partyColors'
 
 const partyNameToCode = _.reduce(partyCodeToName, (res, name, code) => {
@@ -62,7 +62,7 @@ const getIncumbentClassName = (props) => {
     if (typeof props.candidates !== 'undefined' && Array.isArray(props.candidates) && props.candidates.length > 0) {
       seatUpForElection = _.includes((_.find(props.candidates, can => {
         return _.includes(can.party, incumbentParty)
-      })).name, incumbentLastName)
+      })).name.toLowerCase(), incumbentLastName.toLowerCase())
     }
   }
 
@@ -81,7 +81,7 @@ const getIncumbentClassName = (props) => {
   }
 
   if (_.includes(Object.keys(open), props.state) && incumbentLastName !== null) {
-    seatUpForElection = _.includes(open[props.state], incumbentLastName)
+    seatUpForElection = _.includes(open[props.state].toLowerCase(), incumbentLastName.toLowerCase())
   }
 
   if (props.country === 'US' &&
@@ -106,7 +106,7 @@ const getCandidateClassName = (props) => {
   const lastName = name[name.length-1]
   const party = props.rep.party
 
-  if (_.includes(winner.name, lastName) && party === winner.party) {
+  if (_.includes(winner.name.toLowerCase(), lastName.toLowerCase()) && party === winner.party) {
     return "election-winner"
   } else {
     return ""

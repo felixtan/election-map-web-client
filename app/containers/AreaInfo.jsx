@@ -18,7 +18,7 @@ export default class AreaInfoContainer extends React.Component {
 
   render() {
     return (
-      <Control position='topright'>
+      <Control position='bottomright'>
         <AreaInfo highlighted={this.state.highlighted} elections={this.state.elections} />
       </Control>
     )
