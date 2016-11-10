@@ -17,16 +17,15 @@ import Countries from './Countries'
 export default class LayerControl extends React.Component {
   constructor(props) {
     super(props)
+    // console.log(props)
     this.state = {
-      electionColorDelay: 2500,
       leafletMap: props.map,
       country: 'US',
       elections: {},
       countryExecutives: {},
       countryLegislativeUpper: {},
       countryLegislativeLower: {},
-      defaultStatePatternsForSenate: {},
-      electionStatePatternsForSenate: {}
+      defaultStatePatternsForSenate: {}
     }
 
     // Methods
@@ -40,7 +39,8 @@ export default class LayerControl extends React.Component {
       }
 
       res.json().then(data => {
-        // delete data._id
+        delete data._id
+        // console.log(data)
         this.setState({
           countryName: data.name,
           countryExecutives: data.representatives
@@ -85,6 +85,7 @@ export default class LayerControl extends React.Component {
       res.json().then(reps => {
         delete reps._id
         this.setState({ countryLegislativeLower: reps })
+        // console.log(this.state.countryLegislativeLower)
       }, err => {
         console.error(err)
       })
@@ -162,21 +163,18 @@ export default class LayerControl extends React.Component {
         <LayersControl.BaseLayer name='Executive' checked={true} ref='countryExecLayer' >
           <Countries elections={this.state.elections.country.executive}
                      reps={this.state.countryExecutives}
-                     layerControl={this}
-                     electionColorDelay={this.state.electionColorDelay} />
+                     layerControl={this} />
         </LayersControl.BaseLayer>
         <LayersControl.BaseLayer name='Senate' ref='countryLegisUpperLayer'>
           <States elections={this.state.elections.country.legislativeUpper}
                   reps={this.state.countryLegislativeUpper}
                   defaultPatterns={this.state.defaultStatePatternsForSenate}
-                  layerControl={this}
-                  electionColorDelay={this.state.electionColorDelay} />
+                  layerControl={this} />
         </LayersControl.BaseLayer>
         <LayersControl.BaseLayer name='House of Representatives' ref='countryLegisLowerLayer'>
           <CongressionalDistricts elections={this.state.elections.country.legislativeLower}
                                   reps={this.state.countryLegislativeLower}
-                                  layerControl={this}
-                                  electionColorDelay={this.state.electionColorDelay} />
+                                  layerControl={this} />
         </LayersControl.BaseLayer>
       </LayersControl>
     )

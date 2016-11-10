@@ -15,10 +15,11 @@ export default class PoliticsMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        center: [39.833, -98.583],  // centered on US
-        // center: [-1.809697, -53.484192],  // somewhere in brazil on the amazon river
+        // center: [39.833, -98.583],  // centered on US
+        center: [-1.809697, -53.484192],  // somewhere in brazil on the amazon river
         // center: [38.89511, -77.03637],  // washington dc
         zoom: 4,
+        // zoom: 15,
         style: {
           height: "100%",
           width: "100%",

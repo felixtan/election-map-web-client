@@ -17,15 +17,15 @@ app.use((req, res, next) => {
 
 // routes
 app.get('/', (req, res) => {
-  console.log(req.body);
-  console.log(req.params);
+  // console.log(req.body);
+  // console.log(req.params);
   res.send('ok');
 });
 
 // GET all us senators or house reps or country level execs
 app.get('/api/v1/:levelOfGov/:branchOfGov/:role/:country', (req, res) => {
-  // console.log(req);
   const q = req.params;
+  // console.log(q);
 
   // TODO: Use query params in db query, not if statement
   // Role is not used when branchOfGov=executive
@@ -39,7 +39,10 @@ app.get('/api/v1/:levelOfGov/:branchOfGov/:role/:country', (req, res) => {
         res.status(400).json({ msg: 'Invalid role in request url' });
       }
     } else if (q.branchOfGov === 'executive') {
-      db.collection('countryExecutives').findOne({ iso_a2: q.country }).then(data => { res.json(data); });
+      console.log(q.country);
+      db.collection('countryExecutives')
+        .findOne({ iso_a2: q.country.toUpperCase() })
+        .then(data => { res.json(data); });
     } else {
       res.status(400).json({ msg: 'Invalid branchOfGov in request url' });
     }
@@ -62,7 +65,7 @@ app.get('/api/v1/:levelOfGov/:branchOfGov/:role/:country', (req, res) => {
 
 app.get('/api/v1/elections/:country', (req, res) => {
   const q = req.params;
-  db.collection('elections').findOne({ iso_a2: q.country }).then((err, doc) => {
+  db.collection('elections').findOne({ iso_a2: q.country.toUpperCase() }).then((err, doc) => {
     if (err) {
       res.json(err);
     } else {
