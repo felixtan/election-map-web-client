@@ -45,7 +45,7 @@ export default class GeoJsonLayer extends React.Component {
   getColor(country) {
     // const reps = country === 'US' ? this.state.reps[country] : null
     const headOfGovernment = (typeof this.state.reps !== 'undefined' && this.state.reps !== null) ? this.state.reps['headOfGovernment'] : null
-    const party = (headOfGovernment !== undefined && headOfGovernment !== null) ? headOfGovernment.party : null
+    const party = (headOfGovernment !== undefined && headOfGovernment !== null) ? headOfGovernment.party.replace(/Party/g, '').trim() : null
 
     switch (party) {
       case 'Democratic':

@@ -57,13 +57,14 @@ export default class GeoJsonLayer extends React.Component {
   }
 
   getColor(state, dist) {
-    if (typeof this.state.reps[state] === 'undefined' || typeof this.state.reps[state][dist] === 'undefined') {
-      // console.log(`${state} ${dist}`)
+    if (typeof this.state.reps[state] === 'undefined' || typeof this.state.reps[state][dist] === 'undefined' || this.state.reps[state][dist].name === 'Vacant') {
+      // if (state === 'AZ') console.log(`${dist}`)
       // GA 7 is undefined
       return 'eeeeee';
     } else {
       const rep = this.state.reps[state][dist]
-      const party = rep.party
+      if (rep.party === undefined) console.log(rep)
+      const party = rep.party.replace(/Party/g, '').trim()
 
       switch (party) {
         case 'Democratic':
