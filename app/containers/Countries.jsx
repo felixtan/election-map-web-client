@@ -64,13 +64,6 @@ export default class GeoJsonLayer extends React.Component {
     if (country === 'US') {
       const headOfGovernment = component.state.reps.headOfGovernment
 
-      // component.setState({ popupContent: {
-      //     office: headOfGovernment.office,
-      //     reps: headOfGovernment,
-      //     state: country.admin
-      //   }
-      // })
-
       component.props.layerControl.props.onSelect({
         reps: [headOfGovernment],
         country: e.target.feature.properties.iso_a2,

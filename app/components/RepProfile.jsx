@@ -1,6 +1,7 @@
 import React from 'react'
 import partyCodeToName from '../../server/data/partyCodeToName'
 import partyCodeToColor from '../fixtures/partyColors'
+import countryCodeToNames from '../fixtures/countryISOA2toNames'
 
 const partyNameToCode = _.reduce(partyCodeToName, (res, name, code) => {
   res[name] = code
@@ -18,15 +19,15 @@ const picStyle = {
   display: 'block'
 }
 
-const profileStyle = (index, last) => {
-  if (last >= 1 && index === last) {
-    return { marginTop: '5px' }
-  } else if (last >= 1 && index > 0) {
-    return { marginTop: '5px', marginBottom: '5px' }
-  } else {
-    return {}
-  }
-}
+// const profileStyle = (index, last) => {
+//   if (last >= 1 && index === last) {
+//     return { marginTop: '5px' }
+//   } else if (last >= 1 && index > 0) {
+//     return { marginTop: '5px', marginBottom: '5px' }
+//   } else {
+//     return {}
+//   }
+// }
 
 const partyColorBarStyle = (partyName) => {
   // console.log(partyName)
@@ -113,11 +114,71 @@ const getCandidateClassName = (props) => {
   }
 }
 
+const iconLinkStyle = {
+  // return {
+    height: '30px',
+    // maxHeight: '100%',
+    weight: '30px',
+    // maxWidth: '100%'
+  // }
+}
+
+const iconLinkRowStyle = {
+  marginTop: '10px'
+}
+
+const iconTextStyle = {
+  textAlign: 'center'
+}
+
+const repLinkStyle = {
+  color: 'black',
+}
+
+const getOffice = (levelOfGov, branchOfGov, name) => {
+  if (levelOfGov === 'country') {
+    if (branchOfGov === 'executive') {
+      return ""   // world leaders are easy search results
+    } else if (branchOfGov === 'legislativeUpper') {
+      return "Senator"
+    } else if (branchOfGov === 'legislativeLower') {
+      return "Representative"
+    } else {
+      console.log(`Couldn't get office for ${name}`)
+    }
+  } else if (levelOfGov === 'adminSubDiv1') {
+    if (branchOfGov === 'executive') {
+      return "Governor"
+    } else if (branchOfGov === 'legislativeUpper') {
+      return "State Senator"
+    } else if (branchOfGov === 'legislativeLower') {
+      return "State Assembly"
+    } else {
+      console.log(`Couldn't get office for ${name}`)
+    }
+  } else if (levelOfGov === 'local') {
+
+  } else {
+    console.log(`Couldn't get office for ${name}`)
+  }
+}
+
+const createGoogleSearchUrl = (props) => {
+  // let terms = props.rep.name + " "
+  const name = props.rep.name.toLowerCase().split(' ')
+  const country = countryCodeToNames[props.country].informal.toLowerCase().split(' ')
+  const office = getOffice(props.levelOfGov, props.branchOfGov, props.rep.name).toLowerCase().split(' ')
+  const query = _.concat(name, country, office).join('+')
+  return `http://www.google.com/search?q=${query}`
+}
+
 // "w3-container"
 export default function Sidebar(props, context) {
-  // console.log(props)
+  // console.log(props.rep.name)
+  // console.log(createQueryString(props))
+
   const getImg = () => {
-    if (typeof props.rep.photo === 'undefined' || typeof props.rep.photo.url === 'undefined' || props.rep.photo.url === "") {
+    if (props.rep.photo === undefined || props.rep.photo.url === null || props.rep.photo.url === undefined || props.rep.photo.url === "") {
       return '../../img/blank-profile-pic.png'
     } else {
       return props.rep.photo.url
@@ -130,7 +191,7 @@ export default function Sidebar(props, context) {
         <li className="w3-container">
           <img src={getImg()} className={getCandidateClassName(props)} style={picStyle} />
           <div className="w3-container w3-center">
-            <h5>{props.rep.name}</h5>
+            <h5><a className='rep-link' style={repLinkStyle} href={createGoogleSearchUrl(props)} target='_blank'>{props.rep.name}</a></h5>
             <h6>{props.rep.party}</h6>
             <div className="party-color-bar" style={partyColorBarStyle(normalizePartyName(props.rep.party))}></div>
           </div>
@@ -143,28 +204,38 @@ export default function Sidebar(props, context) {
     return (
       <li className="w3-container">
         <img src={getImg()} className={getIncumbentClassName(props)} style={picStyle} />
+
         <div className="w3-container w3-center">
-          <h5>{props.rep.name}</h5>
+          <h5><a className='rep-link' style={repLinkStyle} href={createGoogleSearchUrl(props)} target='_blank'>{props.rep.name}</a></h5>
           <h6>{normalizePartyName(props.rep.party)}</h6>
           <div className="party-color-bar" style={partyColorBarStyle(normalizePartyName(props.rep.party))}></div>
-
-          {/*<div className="w3-row">
-            <div className="w3-container w3-quarter">
-
-            </div>
-            <div className="w3-container w3-quarter">
-              <h2>w3-quarter</h2>
-            </div>
-            <div className="w3-container w3-quarter">
-              <h2>w3-quarter</h2>
-            </div>
-            <div className="w3-container w3-quarter">
-              <h2>w3-quarter</h2>
-            </div>
-          </div>*/}
-
         </div>
       </li>
     )
   }
 }
+
+/*
+<div className="w3-row-padding w3-center w3-rest" style={iconLinkRowStyle}>
+  <div className="w3-container w3-third icon-link" style={iconTextStyle}>
+    <a href={props.rep.urls[0]}></a>
+    <img src="../../img/icon-wikipedia.png" style={iconLinkStyle}/>
+    Wikipedia
+  </div>
+  <div className="w3-container w3-third icon-link">
+    <a href={props.rep.urls[1]}></a>
+    <img src="../../img/icon-ballotpedia.png" style={iconLinkStyle}/>
+    Ballotpedia
+  </div>
+  <div className="w3-container w3-third icon-link">
+    <a href={props.rep.urls[1]}></a>
+    <img src="../../img/icon-united-states-seal.png" style={iconLinkStyle}/>
+    Official
+  </div>
+  {/*<div className="w3-container w3-quarter icon-link">
+    <a href={props.rep.urls[1]}></a>
+    <img src="../../img/icon-google.png" style={iconLinkStyle}/>
+    Google
+  </div>
+</div>
+*/

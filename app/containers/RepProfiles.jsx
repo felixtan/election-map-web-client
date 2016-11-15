@@ -98,20 +98,29 @@ export default class RepInfo extends React.Component {
     } else {
       // console.log(this.state)
       if (this.state.elections !== null && typeof this.state.elections.candidates !== 'undefined' && this.state.elections.candidates.length > 0) {
-        candidates = this.state.elections.candidates.map((can, index, cans) => {
-          return (
+        candidates = this.state.elections.candidates.reduce((res, can, index) => {
+          const profile = (
             <Profile rep={can}
                      type="candidate"
+                     levelOfGov={this.state.selected.levelOfGov}
+                     branchOfGov={this.state.selected.branchOfGov}
                      country={this.state.selected.country}
                      state={this.state.selected.state}
                      district={this.state.selected.district}
                      key={index}
-                     last={cans.length-1}
                      candidates={this.state.elections.candidates}
                      winner={this.state.elections.winner} />
           )
-        })
-        // console.log(candidates)
+
+          if (this.state.elections.winner.name === can.name) {
+            // if (this.state.selected.state === 'MI' && this.state.selected.district == 10) console.log(can.name)
+            res.unshift(profile)
+          } else {
+            res.push(profile)
+          }
+
+          return res
+        }, [])
       }
 
       incumbents = this.state.selected.reps.map((rep, index, reps) => {
@@ -124,7 +133,6 @@ export default class RepInfo extends React.Component {
                    state={this.state.selected.state}
                    district={this.state.selected.district}
                    key={index}
-                   last={reps.length-1}
                    candidates={this.state.elections.candidates} />)
       })
 

@@ -74,3 +74,12 @@
   font-weight: bold;
   font-size: 13px;
 }
+
+.rep-link:hover {
+  color: steelblue !important;
+}
+
+.rep-link:visited {
+  color: black;
+  text-decoration: none;
+}
