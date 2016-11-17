@@ -37,7 +37,7 @@ export default {
         6: "Doris Matsui (D)",
         7: "Ami Bera (D)",
         8: "Paul Cook (R)",
-        9: "Jerry McNerny (D)",
+        9: "Jerry McNerney (D)",
         10: "Jeff Denham (R)",
         11: "Mark DeSaulnier (D)",
         12: "Nancy Pelosi (D)",

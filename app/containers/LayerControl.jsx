@@ -165,13 +165,13 @@ export default class LayerControl extends React.Component {
                      reps={this.state.countryExecutives}
                      layerControl={this} />
         </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name='Senate' ref='countryLegisUpperLayer'>
+        <LayersControl.BaseLayer name='Legislative (Senate)' ref='countryLegisUpperLayer'>
           <States elections={this.state.elections.country.legislativeUpper}
                   reps={this.state.countryLegislativeUpper}
                   defaultPatterns={this.state.defaultStatePatternsForSenate}
                   layerControl={this} />
         </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name='House of Representatives' ref='countryLegisLowerLayer'>
+        <LayersControl.BaseLayer name='Legislative (House)' ref='countryLegisLowerLayer'>
           <CongressionalDistricts elections={this.state.elections.country.legislativeLower}
                                   reps={this.state.countryLegislativeLower}
                                   layerControl={this} />

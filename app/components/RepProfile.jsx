@@ -2,6 +2,7 @@ import React from 'react'
 import partyCodeToName from '../../server/data/partyCodeToName'
 import partyCodeToColor from '../fixtures/partyColors'
 import countryCodeToNames from '../fixtures/countryISOA2toNames'
+import ImageAttribution from '../components/ImageAttribution'
 
 const partyNameToCode = _.reduce(partyCodeToName, (res, name, code) => {
   res[name] = code
@@ -107,7 +108,7 @@ const getCandidateClassName = (props) => {
   const lastName = name[name.length-1]
   const party = props.rep.party
 
-  if (_.includes(winner.name.toLowerCase(), lastName.toLowerCase()) && party === winner.party) {
+  if (winner !== undefined && winner.name !== undefined && winner.name !== null && winner.name !== '' && _.includes(winner.name.toLowerCase(), lastName.toLowerCase()) && party === winner.party) {
     return "election-winner"
   } else {
     return ""
@@ -172,6 +173,15 @@ const createGoogleSearchUrl = (props) => {
   return `http://www.google.com/search?q=${query}`
 }
 
+const createAttrib = (photo) => {
+  if (photo.attrib === undefined || photo.attrib === null || photo.attrib === 'public domain') {
+    return
+  } else {
+    // remove "by"
+    return photo.attrib.substring(2)
+  }
+}
+
 // "w3-container"
 export default function Sidebar(props, context) {
   // console.log(props.rep.name)
@@ -189,7 +199,11 @@ export default function Sidebar(props, context) {
     if (filter(props)) {
       return (
         <li className="w3-container">
-          <img src={getImg()} className={getCandidateClassName(props)} style={picStyle} />
+          <div className="w3-container w3-center">
+            <img src={getImg()} className={getCandidateClassName(props)} style={picStyle} />
+            {/*<p style={attribStyle}>{createAttrib(props.rep.photo)}</p>*/}
+            <ImageAttribution photo={props.rep.photo} />
+          </div>
           <div className="w3-container w3-center">
             <h5><a className='rep-link' style={repLinkStyle} href={createGoogleSearchUrl(props)} target='_blank'>{props.rep.name}</a></h5>
             <h6>{props.rep.party}</h6>
@@ -203,8 +217,11 @@ export default function Sidebar(props, context) {
   } else if (props.type === 'incumbent') {
     return (
       <li className="w3-container">
-        <img src={getImg()} className={getIncumbentClassName(props)} style={picStyle} />
-
+        <div className="w3-container w3-center">
+          <img src={getImg()} className={getIncumbentClassName(props)} style={picStyle} />
+          {/*<p style={attribStyle}>{createAttrib(props.rep.photo)}</p>*/}
+          <ImageAttribution photo={props.rep.photo} />
+        </div>
         <div className="w3-container w3-center">
           <h5><a className='rep-link' style={repLinkStyle} href={createGoogleSearchUrl(props)} target='_blank'>{props.rep.name}</a></h5>
           <h6>{normalizePartyName(props.rep.party)}</h6>
