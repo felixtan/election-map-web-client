@@ -3,6 +3,8 @@ import partyCodeToName from '../../server/data/partyCodeToName'
 import partyCodeToColor from '../fixtures/partyColors'
 import countryCodeToNames from '../fixtures/countryISOA2toNames'
 import ImageAttribution from '../components/ImageAttribution'
+import statesLetterCodeToName from '../fixtures/statesLetterCodeToName'
+import { ordinalizeDistrict } from '../utils/helpers'
 
 const partyNameToCode = _.reduce(partyCodeToName, (res, name, code) => {
   res[name] = code
@@ -164,12 +166,48 @@ const getOffice = (levelOfGov, branchOfGov, name) => {
   }
 }
 
+// TODO: Year should come from the data/backend
+const getElection = (props, year) => {
+  const levelOfGov = props.levelOfGov
+  const branchOfGov = props.branchOfGov
+  const country = props.country
+  const state = props.state !== null ? statesLetterCodeToName[props.state] : null
+  const dist = props.district !== null ? ordinalizeDistrict(props.district) : null
+
+  if (levelOfGov === 'country') {
+    if (branchOfGov === 'executive') {
+      return `${year} presidential election candidate`
+    } else if (branchOfGov === 'legislativeUpper') {
+      return `${year} ${state} senate election candidate`
+    } else if (branchOfGov === 'legislativeLower') {
+      return `${year} ${state} ${dist} district house election candidate`
+    } else {
+      console.log(`Couldn't get office for ${name}`)
+    }
+  } else if (levelOfGov === 'adminSubDiv1') {
+    if (branchOfGov === 'executive') {
+      return "Governor"
+    } else if (branchOfGov === 'legislativeUpper') {
+      return "State Senator"
+    } else if (branchOfGov === 'legislativeLower') {
+      return "State Assembly"
+    } else {
+      console.log(`Couldn't get office for ${name}`)
+    }
+  } else if (levelOfGov === 'local') {
+    //
+  } else {
+    console.log(`Couldn't get office for ${name}`)
+  }
+}
+
 const createGoogleSearchUrl = (props) => {
-  // let terms = props.rep.name + " "
+  // console.log(props)
   const name = props.rep.name.toLowerCase().split(' ')
   const country = countryCodeToNames[props.country].informal.toLowerCase().split(' ')
-  const office = getOffice(props.levelOfGov, props.branchOfGov, props.rep.name).toLowerCase().split(' ')
-  const query = _.concat(name, country, office).join('+')
+
+  const officeOrElection = (props.type === 'incumbent') ? getOffice(props.levelOfGov, props.branchOfGov, props.rep.name).toLowerCase().split(' ') : getElection(props, 2016).toLowerCase().split(' ')
+  const query = (props.type === 'incumbent') ? _.concat(name, country, officeOrElection).join('+') : _.concat(name, officeOrElection).join('+')
   return `http://www.google.com/search?q=${query}`
 }
 

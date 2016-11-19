@@ -1,4 +1,4 @@
-export function getCongressionalDistrictName(districtNum) {
+export function ordinalizeDistrict(districtNum) {
   // console.log(districtNum)
   if (districtNum !== null && districtNum !== undefined) {
     if (!isNaN(districtNum)) {

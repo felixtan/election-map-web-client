@@ -1,7 +1,7 @@
 import React from 'react'
 import statesLetterCodeToName from '../fixtures/statesLetterCodeToName'
 import countryISOA2toNames from '../fixtures/countryISOA2toNames'
-import { getCongressionalDistrictName } from '../utils/helpers'
+import { ordinalizeDistrict } from '../utils/helpers'
 
 const districtNameStyle = (props) => {
   if (props.highlighted.district !== undefined && props.highlighted.district !== null) {
@@ -44,7 +44,7 @@ export default function AreaInfo(props, context) {
     //  className="w3-right-align"
     return (
       <div className='w3-container area-info'>
-        <p style={districtNameStyle(props)}>{getCongressionalDistrictName(props.highlighted.district)} Congressional District</p>
+        <p style={districtNameStyle(props)}>{ordinalizeDistrict(props.highlighted.district)} Congressional District</p>
         <p style={stateNameStyle(props)}>{statesLetterCodeToName[props.highlighted.state]}</p>
         <p style={countryNameStyle(props)}>{countryISOA2toNames[props.highlighted.country].informal}</p>
       </div>

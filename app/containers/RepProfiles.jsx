@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import Profile from '../components/RepProfile'
 import stateCodeToName from '../fixtures/statesLetterCodeToName'
 import countryCodeToNames from '../fixtures/countryISOA2toNames'
-import { getCongressionalDistrictName } from '../utils/helpers'
+import { ordinalizeDistrict } from '../utils/helpers'
 
 export default class RepInfo extends React.Component {
   constructor(props) {
@@ -40,7 +40,7 @@ export default class RepInfo extends React.Component {
         if (this.state.selected.branchOfGov === 'legislativeUpper') {
           return `${countryCodeToNames[this.state.selected.country].informal} Senator from ${stateCodeToName[this.state.selected.state]}`
         } else if (this.state.selected.branchOfGov === 'legislativeLower') {
-          return `${countryCodeToNames[this.state.selected.country].informal} Representative from the ${getCongressionalDistrictName(this.state.selected.district)} Congressional District of ${stateCodeToName[this.state.selected.state]}`
+          return `${countryCodeToNames[this.state.selected.country].informal} Representative from the ${ordinalizeDistrict(this.state.selected.district)} Congressional District of ${stateCodeToName[this.state.selected.state]}`
         } else {
           return 'Unhandled Office'
         }
@@ -61,7 +61,7 @@ export default class RepInfo extends React.Component {
       } else if (this.state.selected.branchOfGov === 'legislativeUpper') {
         return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} Senate Election in ${stateCodeToName[this.state.selected.state]}`
       } else if (this.state.selected.branchOfGov === 'legislativeLower') {
-        return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} House of Representatives Election in the ${getCongressionalDistrictName(this.state.selected.district)} Congressional District of ${stateCodeToName[this.state.selected.state]}`
+        return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} House of Representatives Election in the ${ordinalizeDistrict(this.state.selected.district)} Congressional District of ${stateCodeToName[this.state.selected.state]}`
       } else {
         return `Undhandled election name for levelOfGov=country, branchOfGov=${this.state.selected.branchOfGov}`
       }
