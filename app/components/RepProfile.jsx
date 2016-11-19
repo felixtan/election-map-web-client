@@ -44,7 +44,7 @@ const partyColorBarStyle = (partyName) => {
 
 const filter = (props) => {
   // console.log(props)
-  const partiesToFilter = ['Conservative Party', 'Independence Party', 'Write-In', "Independent", "Constitution Party"]
+  const partiesToFilter = ['Conservative Party', 'Independence Party', 'Write-In', "Constitution Party"]
   return !_.includes(partiesToFilter, props.rep.party)
 }
 

@@ -116,7 +116,9 @@ export default class RepInfo extends React.Component {
           //   console.log(can.name)
           //   console.log(this.state.elections.winner.name)
           // }
-          if (this.state.elections.winner !== undefined && this.state.elections.winner.name !== undefined && this.state.elections.winner.name !== null && this.state.elections.winner.name !== '' && this.state.elections.winner.name === can.name) {
+          const name = can.name.split(' ')
+          const lastName = name[name.length-1]
+          if (this.state.elections.winner !== undefined && this.state.elections.winner.name !== undefined && this.state.elections.winner.name !== null && this.state.elections.winner.name !== '' && this.state.elections.winner.party === can.party && _.includes(this.state.elections.winner.name, lastName)) {
             res.unshift(profile)
           } else {
             res.push(profile)
