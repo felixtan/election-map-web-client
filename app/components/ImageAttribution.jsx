@@ -13,7 +13,7 @@ const linkStyle = {
 }
 
 export default function ImageAttribution(props, context) {
-  if (props.photo.attrib === undefined || props.photo.attrib === null || props.photo.attrib === 'public domain') {
+  if (props.photo === undefined || props.photo.attrib === undefined || props.photo.attrib === null || props.photo.attrib === 'public domain') {
     return (
       <p style={attribStyle}></p>
     )
