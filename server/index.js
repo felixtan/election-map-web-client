@@ -85,7 +85,7 @@ client.connect(config.uri, (err, _db) => {
   db = _db;
   console.log('Connected to mongodb.');
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 8000;
   app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`);
   });
