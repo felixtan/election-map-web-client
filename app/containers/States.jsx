@@ -2,7 +2,6 @@ import { includes } from 'lodash'
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { GeoJson } from 'react-leaflet'
-import PopupContainer from './Popup'
 import states from '../fixtures/geojson/us-states-20m-census2015.json';
 import statesLetterCodeToName from '../fixtures/statesLetterCodeToName'
 import partyCodeToColor from '../fixtures/partyColors'
@@ -118,8 +117,6 @@ export default class GeoJsonLayer extends React.Component {
                onEachFeature={this.onEachFeature.bind(null, this)}
                ref="geojson"
                style={this.style}>
-
-               {/*<PopupContainer content={this.state.popupContent}/>*/}
       </GeoJson>
     )
   }

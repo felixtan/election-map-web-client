@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import RepProfiles from './RepProfiles'
 
-require('../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js')
-require('../../node_modules/sidebar-v2/css/leaflet-sidebar.min.css')
+require('../js/leaflet-sidebar.min.js')
+require('../styles/components/leaflet-sidebar.min.css')
 
 export default class SidebarContainer extends React.Component {
   constructor(props) {

@@ -6,10 +6,6 @@ import LayerControl from './LayerControl'
 import Sidebar from './Sidebar'
 import AreaInfo from './AreaInfo'
 
-// TODO: make sure the transition time is the same as this.state.electionColorDelay
-require('../styles/components/electionColor.css')
-// require('../../node_modules/leaflet/dist/leaflet.css')
-
 export default class PoliticsMap extends React.Component {
 
   constructor(props) {

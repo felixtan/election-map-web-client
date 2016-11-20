@@ -1,5 +1,5 @@
 import React from 'react'
-import partyCodeToName from '../../server/data/partyCodeToName'
+import partyCodeToName from '../fixtures/partyCodeToName'
 import partyCodeToColor from '../fixtures/partyColors'
 import countryCodeToNames from '../fixtures/countryISOA2toNames'
 import ImageAttribution from '../components/ImageAttribution'
@@ -21,16 +21,6 @@ const picStyle = {
   margin: 'auto',
   display: 'block'
 }
-
-// const profileStyle = (index, last) => {
-//   if (last >= 1 && index === last) {
-//     return { marginTop: '5px' }
-//   } else if (last >= 1 && index > 0) {
-//     return { marginTop: '5px', marginBottom: '5px' }
-//   } else {
-//     return {}
-//   }
-// }
 
 const partyColorBarStyle = (partyName) => {
   // console.log(partyName)
@@ -118,12 +108,8 @@ const getCandidateClassName = (props) => {
 }
 
 const iconLinkStyle = {
-  // return {
-    height: '30px',
-    // maxHeight: '100%',
-    weight: '30px',
-    // maxWidth: '100%'
-  // }
+  height: '30px',
+  weight: '30px',
 }
 
 const iconLinkRowStyle = {

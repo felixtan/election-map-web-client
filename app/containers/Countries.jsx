@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { GeoJson } from 'react-leaflet'
-import PopupContainer from './Popup'
 import countries from '../fixtures/geojson/countries_110m.json';
 
 export default class GeoJsonLayer extends React.Component {
@@ -13,7 +12,6 @@ export default class GeoJsonLayer extends React.Component {
       geoData: countries,
       reps: props.reps,
       elections: props.elections,
-      electionColorDelay: props.electionColorDelay,
       levelOfGov: 'country',
       branchOfGov: 'executive'
     }
@@ -72,9 +70,6 @@ export default class GeoJsonLayer extends React.Component {
         levelOfGov: component.state.levelOfGov,
         branchOfGov: component.state.branchOfGov,
       }, component.state.elections)
-    } else {
-      // geojson.leafletElement._popupContent._close()
-      geojson.closePopup()
     }
   }
 
@@ -120,8 +115,6 @@ export default class GeoJsonLayer extends React.Component {
                ref="geojson"
                style={this.style}
                filter={this.filterCountries}>
-
-               {/*<PopupContainer content={this.state.popupContent}/>*/}
       </GeoJson>
     )
   }

@@ -1,11 +1,11 @@
 import React from 'react'
-import partyCodeToName from '../../server/data/partyCodeToName'
+import partyCodeToName from '../fixtures/partyCodeToName'
 import partyCodeToColor from '../fixtures/partyColors'
 import countryCodeToNames from '../fixtures/countryISOA2toNames'
 import licenseLinks from '../fixtures/licenseLinks'
 
 const attribStyle = {
-  fontSize: '8px'
+  fontSize: '9px'
 }
 
 const linkStyle = {
