@@ -34,7 +34,7 @@ export default class LayerControl extends React.Component {
 
     getAllCountryLevelExecutives(this.state.country.toLowerCase()).then(res => {
       if (res.status !== 200) {
-        console.log(`Looks like there was a problem. Status Code: + ${res.status}`)
+        // console.log(`Looks like there was a problem. Status Code: + ${res.status}`)
         console.error(res)
       }
 
@@ -55,7 +55,7 @@ export default class LayerControl extends React.Component {
 
     getAllCountryLegislatorsUpper(this.state.country.toLowerCase()).then(res => {
       if (res.status !== 200) {
-        console.log(`Looks like there was a problem. Status Code: + ${res.status}`)
+        // console.log(`Looks like there was a problem. Status Code: + ${res.status}`)
         console.error(res)
       }
 
@@ -78,7 +78,7 @@ export default class LayerControl extends React.Component {
 
     getAllCountryLegislatorsLower(this.state.country.toLowerCase()).then(res => {
       if (res.status !== 200) {
-        console.log(`Looks like there was a problem. Status Code: + ${res.status}`)
+        // console.log(`Looks like there was a problem. Status Code: + ${res.status}`)
         console.error(res)
       }
 
@@ -95,7 +95,7 @@ export default class LayerControl extends React.Component {
 
     getAllElectionsForCountry(this.state.country).then(res => {
       if (res.status !== 200) {
-        console.log(`Looks like there was a problem. Status Code: + ${res.status}`)
+        // console.log(`Looks like there was a problem. Status Code: + ${res.status}`)
         console.error(res)
       }
 

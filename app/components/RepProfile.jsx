@@ -213,7 +213,7 @@ export default function Sidebar(props, context) {
 
   const getImg = () => {
     if (props.rep.photo === undefined || props.rep.photo.url === null || props.rep.photo.url === undefined || props.rep.photo.url === "") {
-      return '../../img/blank-profile-pic.png'
+      return './img/blank-profile-pic.png'
     } else {
       return props.rep.photo.url
     }

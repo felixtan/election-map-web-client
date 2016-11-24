@@ -1,20 +1,11 @@
 // TODO: service countries other than the US
 
-export default {
-  // getHeadOfState,
-  // getHouseRepresentatives,
-  getSenators,
-  // getStateExecutives,
-  // getStateAssemblyMembers,
-  // getStateSenators,
-}
-
 import googleCivicInfoConfig from '../config/googleCivicInfo.json'
 const representativesResource = googleCivicInfoConfig.representatives
 const civicInfoAPIKey = googleCivicInfoConfig.key
 
 // custom api
-import api from '../config/api.json'
+const api = process.env.NODE_ENV === 'development' ? require('../config/devApi.json') : require('../config/prodApi.json')
 const apiUrl = api.url
 const electionsUri = api.elections;
 
@@ -76,7 +67,7 @@ export function getSenators(state) {
     const request = new Request(url)
     fetch(request).then(function(response) {
       if (response.status !== 200) {
-        console.log(`Looks like there was a problem. Status Code: + ${response.status}`)
+        // console.log(`Looks like there was a problem. Status Code: + ${response.status}`)
         reject(response)
       }
 
@@ -84,7 +75,7 @@ export function getSenators(state) {
         resolve(data)
       })
     }, function(err) {
-      console.log(`Looks like there was a problem. ${err}`)
+      // console.log(`Looks like there was a problem. ${err}`)
       reject(err)
     })
   })

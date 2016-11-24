@@ -39,7 +39,7 @@ export default class GeoJsonLayer extends React.Component {
     //  && (dist !== 98 || dist !== 7 && state !== 'GA')
     if (!_.includes(territories, state)) {
       if (cans === undefined) {
-        console.log(`${state} ${dist}`)
+        // console.log(`${state} ${dist}`)
         cans = []
       }
       return {

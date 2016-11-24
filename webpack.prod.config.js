@@ -115,21 +115,27 @@ module.exports = {
     new ExtractTextPlugin('[name].[chunkhash].css'),
 
     // Remove comment to dedupe duplicating dependencies for larger projects
-    // new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.DedupePlugin(),
 
     // Separate vendor and manifest files
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'manifest']
+      // names: ['vendor', 'manifest']    // This caused the errors in production
+      names: ['manifest', 'vendor']
     }),
+    /* The issue is described here
+     *  https://stackoverflow.com/questions/36634530/uncaught-typeerror-cannot-read-property-call-of-undefined-after-webpack-rebui
+     *  https://github.com/webpack/webpack/issues/1016#issuecomment-182093533
+     * */
 
     // Minify JavaScript
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }
-    })
+    }),
+
     // Error: vendor.450f275….js:16 Uncaught TypeError: Cannot read property 'shape' of undefined
     // Error: manifest.798b47f….js:1 Uncaught TypeError: Cannot read property 'call' of undefined
-    // new webpack.optimize.OccurrenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin()
   ]
 };
