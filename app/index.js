@@ -10,8 +10,6 @@ import MissingRoute from './components/MissingRoute';
 // import rsdb from './fixtures/rsdb.js';
 import store from './store/store.js';
 
-require('../node_modules/leaflet.pattern');
-
 const routeConfig = (
   <Route path="/" component={Map}>
     <Route path="*" component={MissingRoute} />

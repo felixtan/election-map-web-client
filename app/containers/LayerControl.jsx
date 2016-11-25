@@ -9,6 +9,8 @@ import { getAllElectionsForCountry,
 } from '../services/ElectedRepsService.js'
 import partyCodeToColor from '../fixtures/partyColors'
 
+require('../js/leaflet.pattern-src');
+
 // GeoJson containers
 import States from './States'
 import CongressionalDistricts from './CongressionalDistricts'

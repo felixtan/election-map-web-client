@@ -26,6 +26,12 @@ const UPPER = 'upper'
 const LOWER = 'lower'
 
 
+function createReq(url) {
+  return new Request(url)
+  // return new Request(url, {
+  //   mode: 'no-cors'
+  // })
+}
 
 export function getHeadOfState() {
 
@@ -37,25 +43,25 @@ export function getHouseReps(state, district) {
 
 export function getAllElectionsForCountry(countryISOA2) {
   const url = electionsUri + countryISOA2
-  const req = new Request(url)
+  const req = createReq(url)
   return fetch(req)
 }
 
 export function getAllCountryLevelExecutives(country) {
   const url = apiUrl + COUNTRY + '/' + EXECUTIVE + '/' + HEAD_OF_GOV + '/' + country.toLowerCase()
-  const req = new Request(url)
+  const req = createReq(url)
   return fetch(req)
 }
 
 export function getAllCountryLegislatorsUpper(country) {
   const url = apiUrl + COUNTRY + '/' + LEGISLATIVE + '/' + UPPER + '/' + country.toLowerCase()
-  const req = new Request(url)
+  const req = createReq(url)
   return fetch(req)
 }
 
 export function getAllCountryLegislatorsLower(country) {
   const url = apiUrl + COUNTRY + '/' + LEGISLATIVE + '/' + LOWER + '/' + country.toLowerCase()
-  const req = new Request(url)
+  const req = createReq(url)
   return fetch(req)
 }
 
@@ -64,7 +70,7 @@ export function getSenators(state) {
   const roles = 'legislatorUpperBody'
   const url = createUrl(ocdId, { roles: roles })
   return new Promise(function(resolve, reject) {
-    const request = new Request(url)
+    const request = createReq(url)
     fetch(request).then(function(response) {
       if (response.status !== 200) {
         // console.log(`Looks like there was a problem. Status Code: + ${response.status}`)

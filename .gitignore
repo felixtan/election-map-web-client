@@ -7,3 +7,9 @@ Icon?
 node_modules
 *.log
 *.gz
+
+.storybook
+coverage
+test
+webpack.lint.config.js
+webpack.config.js

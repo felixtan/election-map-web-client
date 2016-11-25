@@ -46,6 +46,10 @@ module.exports = {
     chunkFilename: '[chunkhash].js',
     publicPath: '/'
   },
+  node: {
+    fs: "empty",
+    child_process: "empty"
+  },
   module: {
     loaders: [
       {
@@ -78,7 +82,7 @@ module.exports = {
     ];
   },
   // Remove comment if you require sourcemaps for your production code
-  // devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
   plugins: [
     // Required to inject NODE_ENV within React app.
     // Reduntant package.json script entry does not do that, but required for .babelrc
