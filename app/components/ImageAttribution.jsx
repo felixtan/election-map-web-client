@@ -25,8 +25,7 @@ export default function ImageAttribution(props, context) {
 
     return (
       <span style={attribStyle}>
-        <a className='attrib-link' style={linkStyle} href={source} target="_blank">{author}</a>/
-        <a className='attrib-link' style={linkStyle} href={licenseLinks[license]} target="_blank">{license}</a>
+        <a className='attrib-link' style={linkStyle} href={source} target="_blank">{author}</a> / <a className='attrib-link' style={linkStyle} href={licenseLinks[license]} target="_blank">{license}</a>
       </span>
     )
   }

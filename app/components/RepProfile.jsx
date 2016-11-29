@@ -40,6 +40,15 @@ const filter = (props) => {
   return !_.includes(partiesToFilter, props.rep.party)
 }
 
+/*
+  Determine if a sitting representative's seat is up for re-relection.
+  If it is, apply the class .seat-up-for-election which imbues the representative's
+  portrait with a red border.
+
+  It's straightforward for house reps but more complex for senators because not all
+  senatorial seats are up for election and only one senator of any state is up for
+  re-election at any time barring a special election.
+*/
 const getIncumbentClassName = (props) => {
   // console.log(props)
   let seatUpForElection = false
@@ -54,9 +63,13 @@ const getIncumbentClassName = (props) => {
     const incumbentParty = props.rep.party
 
     if (typeof props.candidates !== 'undefined' && Array.isArray(props.candidates) && props.candidates.length > 0) {
-      seatUpForElection = _.includes((_.find(props.candidates, can => {
+      let x = _.find(props.candidates, can => {
         return _.includes(can.party, incumbentParty)
-      })).name.toLowerCase(), incumbentLastName.toLowerCase())
+      })
+
+      seatUpForElection = x === undefined ? false : _.includes(x.name.toLowerCase(), incumbentLastName.toLowerCase())
+
+      // if (x === undefined) console.log(props)
     }
   }
 

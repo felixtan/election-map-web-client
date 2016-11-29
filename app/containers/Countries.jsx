@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { GeoJson } from 'react-leaflet'
-import countries from '../fixtures/geojson/countries_110m.json';
+import countries from '../fixtures/geojson/countries_110m.json'
+import { getPartyColor } from '../utils/helpers'
 
 export default class GeoJsonLayer extends React.Component {
   constructor(props) {
@@ -43,16 +44,7 @@ export default class GeoJsonLayer extends React.Component {
   getColor(country) {
     // const reps = country === 'US' ? this.state.reps[country] : null
     const headOfGovernment = (typeof this.state.reps !== 'undefined' && this.state.reps !== null) ? this.state.reps['headOfGovernment'] : null
-    const party = (headOfGovernment !== undefined && headOfGovernment !== null) ? headOfGovernment.party.replace(/Party/g, '').trim() : null
-
-    switch (party) {
-      case 'Democratic':
-        return '#0000ff';
-      case 'Republican':
-        return '#ff0000';
-      default:
-        return 'eeeeee';
-    }
+    return getPartyColor(headOfGovernment.party)
   }
 
   displayProfiles(component, e) {

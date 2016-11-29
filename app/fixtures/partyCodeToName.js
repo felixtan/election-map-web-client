@@ -19,5 +19,8 @@ export default {
   "VPP": "Vermont Progressive Party",
   "W": "Write-In",
   "WFP": "Working Families Party",
-  "NPP": "New Progressive Party"      // PR
+
+  // PR
+  "PNP": "New Progressive Party",
+  "PPD": "Popular Democratic Party"
 }

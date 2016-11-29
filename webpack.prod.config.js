@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // Folder ops
-const CleanPlugin = require('clean-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
@@ -22,33 +22,53 @@ const autoprefixer = require('autoprefixer');
 // Constants
 const APP = path.join(__dirname, 'app');
 const BUILD = path.join(__dirname, 'build');
+// const PROD = path.join(__dirname, 'build');
 const STYLE = path.join(__dirname, 'app/style.css');
 const PUBLIC = path.join(__dirname, 'app/public');
 const TEMPLATE = path.join(__dirname, 'app/index.html');
 const NODE_MODULES = path.join(__dirname, 'node_modules');
 
-const PACKAGE = Object.keys(
-  require('./package.json').dependencies
-);
+// const PACKAGE = Object.keys(
+//   require('./package.json').dependencies
+// );
+
+// const fs = require('fs')
+// let nodeModules = {};
+// fs.readdirSync('node_modules')
+//   .filter(function(x) {
+//     return ['.bin'].indexOf(x) === -1;
+//   })
+//   .forEach(function(mod) {
+//     nodeModules[mod] = 'commonjs ' + mod;
+//   });
+
+// node: {
+  // fs: "empty",
+  // child_process: "empty",
+  // tls: "empty",
+  // "net": "empty",
+  // "aws-sdk": "empty",
+  // "module": "empty"
+// },
+
+// externals: nodeModules,
 
 module.exports = {
   entry: {
     app: APP,
     style: STYLE,
-    vendor: PACKAGE
+    // vendor: PACKAGE,      // adding this leads to "Critical dependencies: the request of a dependency is an expression" Warnings and a request is not defined ERROR
   },
+  // target: 'node',
   resolve: {
-    extensions: ['', '.js', '.jsx', '.css']
+    extensions: ['', '.js', '.jsx', '.css', '.json']
   },
   output: {
     path: BUILD,
     filename: '[name].[chunkhash].js',
     chunkFilename: '[chunkhash].js',
-    publicPath: '/'
-  },
-  node: {
-    fs: "empty",
-    child_process: "empty"
+    publicPath: '/',
+    libraryTarget: "var"
   },
   module: {
     loaders: [
@@ -56,6 +76,12 @@ module.exports = {
         test: /\.jsx?$/,
         loaders: ['babel?cacheDirectory'],
         include: APP
+      },
+      {
+        test: /\.js$/,
+        exclude: NODE_MODULES,
+        loader: 'babel-loader'
+        // loader: 'babel-loader',
       },
       // Extract CSS during build
       {
@@ -66,7 +92,7 @@ module.exports = {
       // Process JSON data fixtures
       {
         test: /\.json$/,
-        loader: 'json',
+        loader: 'json-loader',
         include: [APP, NODE_MODULES]
       }
     ]
@@ -89,11 +115,14 @@ module.exports = {
     // Optimizes React for use in production mode
     new webpack.DefinePlugin({
       'process.env': {
+        'process.browser': true,
         'NODE_ENV': JSON.stringify('production') // eslint-disable-line quote-props
       }
     }),
     // Clean build directory
-    new CleanPlugin([BUILD]),
+    new CleanWebpackPlugin([BUILD], {
+      exclude: [`${BUILD}/.git`, `${BUILD}/.gitignore`]
+    }),
     new CopyWebpackPlugin([
         { from: PUBLIC, to: BUILD }
     ],
@@ -117,6 +146,8 @@ module.exports = {
 
     // Extract CSS to a separate file
     new ExtractTextPlugin('[name].[chunkhash].css'),
+
+    // new webpack.ContextReplacementPlugin(),
 
     // Remove comment to dedupe duplicating dependencies for larger projects
     new webpack.optimize.DedupePlugin(),

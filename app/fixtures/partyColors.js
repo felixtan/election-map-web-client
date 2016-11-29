@@ -7,5 +7,6 @@ export default {
   "CON": "#7D017D",    // purple
 
   // PR
-  "NPP": "#0000ff"
+  "PNP": "#0000ff",
+  "PPD": "#ff0000",
 }

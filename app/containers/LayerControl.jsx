@@ -124,7 +124,7 @@ export default class LayerControl extends React.Component {
     only creates stripe pattern for two colors/parties/reps
   */
   createDefaultStripePatternForState(stateCode, repsMap) {
-    const territories = ['DC', 'AS', 'PR', 'GU', 'MP', 'VI', 'UM'];
+    const territories = ['DC', 'AS', 'PR', 'GU', 'MP', 'VI', 'UM']   // these do not have senate representation
     const reps = repsMap[stateCode]
 
     if (territories.indexOf(stateCode) === -1) {

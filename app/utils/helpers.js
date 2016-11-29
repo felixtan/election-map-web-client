@@ -1,3 +1,17 @@
+import partyColors from '../fixtures/partyColors'
+import partyCodeToName from '../fixtures/partyCodeToName'
+
+export function getPartyColor(party) {
+  const partyCode = partyNameToCode(party)
+  return partyCode === undefined ? '#000000' : partyColors[partyCode]
+}
+
+export function partyNameToCode(party) {
+  return _.findKey(partyCodeToName, (name, code) => {
+    return name === party
+  })
+}
+
 export function ordinalizeDistrict(districtNum) {
   // console.log(districtNum)
   if (districtNum !== null && districtNum !== undefined) {

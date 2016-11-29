@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { GeoJson } from 'react-leaflet'
 import congressionalDistricts from '../fixtures/geojson/cb_2015_cd114_20m.json';
-import fipsToState from '../fixtures/statesFIPSToLetterCodes.js'
+import fipsToState from '../fixtures/statesFIPSToLetterCodes'
+import { getPartyColor } from '../utils/helpers'
 
 export default class GeoJsonLayer extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ export default class GeoJsonLayer extends React.Component {
     // if (typeof stateDoc[dist] === 'undefined') console.log(`geo${geoId} dist:${dist} state:${state}`)
     // if (typeof stateDoc[dist] === 'undefined') console.log(stateDoc)
     let cans = stateDoc[dist].candidates
-    const territories = ['DC', 'PR', 'GU', 'VI', 'AS', 'UM', 'MP']
+    const territories = ['DC', 'GU', 'VI', 'AS', 'UM', 'MP']    // these are not represented on the current geojson data used
 
     //  && (dist !== 98 || dist !== 7 && state !== 'GA')
     if (!_.includes(territories, state)) {
@@ -59,20 +60,11 @@ export default class GeoJsonLayer extends React.Component {
     if (typeof this.state.reps[state] === 'undefined' || typeof this.state.reps[state][dist] === 'undefined' || this.state.reps[state][dist].name === 'Vacant') {
       // if (state === 'AZ') console.log(`${dist}`)
       // GA 7 is undefined
-      return 'eeeeee';
+      return '#000000';
     } else {
       const rep = this.state.reps[state][dist]
-      if (rep.party === undefined) console.log(rep)
-      const party = rep.party.replace(/Party/g, '').trim()
-
-      switch (party) {
-        case 'Democratic':
-          return '#0000ff';
-        case 'Republican':
-          return '#ff0000';
-        default:
-          return 'eeeeee';
-      }
+      // if (rep.party === undefined) console.log(rep)
+      return getPartyColor(rep.party)
     }
   }
 
