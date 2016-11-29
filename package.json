@@ -8,7 +8,7 @@
     "start": "NODE_ENV=development webpack-dev-server --inline",
     "prod": "NODE_ENV=production webpack-dev-server --inline",
     "build": "NODE_ENV=production webpack -p --display-error-details --config webpack.prod.config.js",
-    "postinstall": "NODE_ENV=production babel-node server/index.js",
+    "postinstall": "babel-node server/index.js",
     "test": "NODE_ENV=test mocha test/browser.js test/**/*.spec.js --compilers js:babel-core/register --recursive || true",
     "cover": "NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover _mocha --  --require test/browser.js test/**/*.spec.js --reporter dot || true",
     "lint": "NODE_ENV=lint webpack-dev-server --config webpack.lint.config.js",
@@ -32,7 +32,7 @@
   },
   "homepage": "",
   "dependencies": {
-    "babel-core": "6.18.2",
+    "babel-cli": "6.18.0",
     "compression": "1.6.2",
     "express": "4.14.0",
     "leaflet": "^0.7.7",
