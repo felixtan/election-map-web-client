@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import RepProfiles from './RepProfiles'
 
 require('../js/leaflet-sidebar.js')
-require('../styles/components/leaflet-sidebar.css')
+// require('../styles/components/leaflet-sidebar.css')
 
 export default class SidebarContainer extends React.Component {
   constructor(props) {

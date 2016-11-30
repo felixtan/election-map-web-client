@@ -1,4 +1,7 @@
+/* Globals */
 @import 'normalize.css';
+@import 'styles/external/w3.css';
+@import 'styles/components/leaflet-sidebar.css';
 
 /* Base styles */
 @import 'styles/base/variables';
