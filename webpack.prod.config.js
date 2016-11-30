@@ -28,38 +28,12 @@ const PUBLIC = path.join(__dirname, 'app/public');
 const TEMPLATE = path.join(__dirname, 'app/index.html');
 const NODE_MODULES = path.join(__dirname, 'node_modules');
 
-// const PACKAGE = Object.keys(
-//   require('./package.json').dependencies
-// );
-
-// const fs = require('fs')
-// let nodeModules = {};
-// fs.readdirSync('node_modules')
-//   .filter(function(x) {
-//     return ['.bin'].indexOf(x) === -1;
-//   })
-//   .forEach(function(mod) {
-//     nodeModules[mod] = 'commonjs ' + mod;
-//   });
-
-// node: {
-  // fs: "empty",
-  // child_process: "empty",
-  // tls: "empty",
-  // "net": "empty",
-  // "aws-sdk": "empty",
-  // "module": "empty"
-// },
-
-// externals: nodeModules,
-
 module.exports = {
   entry: {
     app: APP,
     style: STYLE,
     // vendor: PACKAGE,      // adding this leads to "Critical dependencies: the request of a dependency is an expression" Warnings and a request is not defined ERROR
   },
-  // target: 'node',
   resolve: {
     extensions: ['', '.js', '.jsx', '.css', '.json']
   },
@@ -108,7 +82,7 @@ module.exports = {
     ];
   },
   // Remove comment if you require sourcemaps for your production code
-  devtool: 'source-map',
+  // devtool: 'source-map',
   plugins: [
     // Required to inject NODE_ENV within React app.
     // Reduntant package.json script entry does not do that, but required for .babelrc
