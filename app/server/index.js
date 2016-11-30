@@ -1,6 +1,6 @@
 const express = require('express')
 const compression = require('compression')
-const path = require('path')
+// const path = require('path')
 const favicon = require('serve-favicon')
 
 // const INDEX = "/Users/photon/Development/politics-map/client-dev/app/index.html"
