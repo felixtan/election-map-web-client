@@ -5,10 +5,11 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --inline",
+    "start": "node app/server/index.js",
+    "dev": "NODE_ENV=development webpack-dev-server --inline",
     "prod": "NODE_ENV=production webpack-dev-server --inline",
     "build": "NODE_ENV=production webpack -p --display-error-details --config webpack.prod.config.js",
-    "heroku-postbuild": "npm run build",
+    "postinstall": "npm run build",
     "test": "NODE_ENV=test mocha test/browser.js test/**/*.spec.js --compilers js:babel-core/register --recursive || true",
     "cover": "NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover _mocha --  --require test/browser.js test/**/*.spec.js --reporter dot || true",
     "lint": "NODE_ENV=lint webpack-dev-server --config webpack.lint.config.js",
