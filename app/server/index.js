@@ -15,7 +15,16 @@ app.use(favicon(__dirname + "/../../build/img/favicon/favicon.ico"))
 // https://stackoverflow.com/questions/20322480/express-js-static-relative-parent-directory
 app.get('/', (req, res) => {
   // res.sendFile(INDEX)
-  res.sendFile(__dirname + '/../../build/index.html')
+  res.sendFile('index.html', {
+    root: __dirname + '/../../build/'
+  }, (err) => {
+    if (err) {
+      console.log(err)
+      res.status(err.status).end()
+    } else {
+      console.log('Sent index.html')
+    }
+  })
 })
 
 app.listen(PORT, err => {
