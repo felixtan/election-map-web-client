@@ -11,6 +11,8 @@ app.use(compression())
 app.use(express.static(__dirname))
 app.use(favicon(__dirname + "/../../build/img/favicon/favicon.ico"))
 
+// On relative paths and __dirname:
+// https://stackoverflow.com/questions/20322480/express-js-static-relative-parent-directory
 app.get('/', (req, res) => {
   // res.sendFile(INDEX)
   res.sendFile(__dirname + '/../../build/index.html')
