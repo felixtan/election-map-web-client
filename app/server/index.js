@@ -9,11 +9,11 @@ const app = express()
 
 app.use(compression())
 app.use(express.static(__dirname))
-app.use(favicon(path.join('img', 'favicon', 'favicon.ico')))
+app.use(favicon(__dirname + "../../build/img/favicon/favicon.ico"))
 
 app.get('/', (req, res) => {
   // res.sendFile(INDEX)
-  res.sendFile(path.join(__dirname, 'index.html'))
+  res.sendFile(__dirname + '../../build/index.html')
 })
 
 app.listen(PORT, err => {
