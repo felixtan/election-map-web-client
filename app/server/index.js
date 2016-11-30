@@ -9,7 +9,7 @@ const app = express()
 
 app.use(compression())
 app.use(express.static(__dirname))
-app.use(favicon(path.join(__dirname, 'img', 'favicon', 'favicon.ico')))
+app.use(favicon(path.join('img', 'favicon', 'favicon.ico')))
 
 app.get('/', (req, res) => {
   // res.sendFile(INDEX)
