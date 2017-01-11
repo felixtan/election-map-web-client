@@ -10,10 +10,3 @@ node_modules
 
 # dev
 .storybook
-coverage
-test
-webpack.lint.config.js
-webpack.config.js
-
-# for pushing to prod
-app
