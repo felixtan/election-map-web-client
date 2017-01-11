@@ -39,7 +39,8 @@ module.exports = {
   },
   output: {
     path: BUILD,
-    filename: '[name].[chunkhash].js',
+    // filename: '[name].[chunkhash].js',
+    filename: '[name].js',
     chunkFilename: '[chunkhash].js',
     publicPath: '/',
     libraryTarget: "var"
@@ -119,7 +120,8 @@ module.exports = {
     }),
 
     // Extract CSS to a separate file
-    new ExtractTextPlugin('[name].[chunkhash].css'),
+    // new ExtractTextPlugin('[name].[chunkhash].css'),
+    new ExtractTextPlugin('[name].css'),
 
     // new webpack.ContextReplacementPlugin(),
 

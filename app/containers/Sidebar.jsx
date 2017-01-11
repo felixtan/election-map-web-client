@@ -5,6 +5,10 @@ import RepProfiles from './RepProfiles'
 require('../js/leaflet-sidebar.js')
 // require('../styles/components/leaflet-sidebar.css')
 
+const testStyle = {
+    color: 'red'
+}
+
 export default class SidebarContainer extends React.Component {
   constructor(props) {
     super(props)
@@ -15,6 +19,8 @@ export default class SidebarContainer extends React.Component {
 
     this.onMouseOver = this.onMouseOver.bind(this)
     this.onMouseOut = this.onMouseOut.bind(this)
+    this.onTouchStart = this.onTouchStart.bind(this)
+    this.onTouchEnd = this.onTouchEnd.bind(this)
   }
 
   componentDidMount() {
@@ -53,17 +59,38 @@ export default class SidebarContainer extends React.Component {
     this.props.map.dragging.disable()
     this.props.map.scrollWheelZoom.disable()
     this.props.map.doubleClickZoom.disable()
+    document.getElementById('touch-test').className = 'touch-test-on'
   }
 
   onMouseOut() {
     this.props.map.dragging.enable()
     this.props.map.scrollWheelZoom.enable()
     this.props.map.doubleClickZoom.enable()
+    document.getElementById('touch-test').className = 'touch-test-off'
+  }
+
+  onTouchStart() {
+    this.props.map.dragging.disable()
+    this.props.map.scrollWheelZoom.disable()
+    this.props.map.doubleClickZoom.disable()
+    document.getElementById('touch-test').className = 'touch-test-on'
+  }
+
+  onTouchEnd() {
+    this.props.map.dragging.enable()
+    this.props.map.scrollWheelZoom.enable()
+    this.props.map.doubleClickZoom.enable()
+    document.getElementById('touch-test').className = 'touch-test-off'
   }
 
   render() {
     return (
-      <div id="sidebar" className="sidebar collapsed" onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
+      <div id="sidebar"
+           className="sidebar collapsed"
+           onMouseOver={this.onMouseOver}
+           onMouseOut={this.onMouseOut}
+           onTouchStart={this.onTouchStart}
+           onTouchEnd={this.onTouchEnd}>
           {/*<!-- Nav tabs -->*/}
           <div className="sidebar-tabs">
               <ul role="tablist">
@@ -83,16 +110,12 @@ export default class SidebarContainer extends React.Component {
               <div className="sidebar-pane" id="profile">
 
                   <h1 className="sidebar-header">
-                      Representatives Profile
+                      Representatives Profile <span id='touch-test' className='touch-test-off' style={testStyle}><strong>LOL</strong></span>
                       <span className="sidebar-close"><i className="fa fa-caret-left"></i></span>
                   </h1>
 
                   <RepProfiles selected={this.state.selected} elections={this.state.elections} />
               </div>
-
-              {/*<div className="sidebar-pane" id="ballot">
-                  <h1 className="sidebar-header">Ballot Lookup<span className="sidebar-close"><i className="fa fa-caret-left"></i></span></h1>
-              </div>*/}
           </div>
       </div>
     )

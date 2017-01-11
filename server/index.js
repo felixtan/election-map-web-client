@@ -5,7 +5,7 @@ import favicon from 'serve-favicon'
 
 const PORT = process.env.PORT || 3000
 const app = express()
-console.log(__dirname)
+// console.log(__dirname)
 app.use(compression())
 app.use(express.static(__dirname))
 app.use(favicon(path.join(__dirname, 'img', 'favicon', 'favicon.ico')))

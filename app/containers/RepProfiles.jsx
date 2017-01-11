@@ -56,15 +56,16 @@ export default class RepInfo extends React.Component {
   // TODO: store election name for each level and branch in elections data from backend
   getElectionName() {
     if (this.state.selected.levelOfGov === 'country') {
-      if (this.state.selected.branchOfGov === 'executive') {
-        return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} Presidential Election`
-      } else if (this.state.selected.branchOfGov === 'legislativeUpper') {
-        return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} Senate Election in ${stateCodeToName[this.state.selected.state]}`
-      } else if (this.state.selected.branchOfGov === 'legislativeLower') {
-        return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} House of Representatives Election in the ${ordinalizeDistrict(this.state.selected.district)} Congressional District of ${stateCodeToName[this.state.selected.state]}`
-      } else {
-        return `Undhandled election name for levelOfGov=country, branchOfGov=${this.state.selected.branchOfGov}`
-      }
+      // if (this.state.selected.branchOfGov === 'executive') {
+      //   return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} Presidential Election`
+      // } else if (this.state.selected.branchOfGov === 'legislativeUpper') {
+      //   return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} Senate Election in ${stateCodeToName[this.state.selected.state]}`
+      // } else if (this.state.selected.branchOfGov === 'legislativeLower') {
+      //   return `Candidates for the 2016 ${countryCodeToNames[this.state.selected.country].informal} House of Representatives Election in the ${ordinalizeDistrict(this.state.selected.district)} Congressional District of ${stateCodeToName[this.state.selected.state]}`
+      // } else {
+      //   return `Undhandled election name for levelOfGov=country, branchOfGov=${this.state.selected.branchOfGov}`
+      // }
+      return `Candidates for the 2016 General Election`
     } else {
       return `Undhandled election name for levelOfGov=${this.state.selected.levelOfGov}`
     }

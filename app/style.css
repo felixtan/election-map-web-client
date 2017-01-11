@@ -1,7 +1,7 @@
 /* Globals */
 @import 'normalize.css';
 @import 'styles/external/w3.css';
-@import 'styles/components/leaflet-sidebar.css';
+@import 'styles/components/leaflet-sidebar.min.css';
 
 /* Base styles */
 @import 'styles/base/variables';
@@ -16,13 +16,13 @@
 @import 'styles/base/image';
 
 /* Component styles */
-.leaflet-container {
+/*.leaflet-container {
   height: 100%;
   margin: 0 auto;
-}
+}*/
 
 .sidebar-content {
-  overflow: scroll !important;
+  /*overflow: scroll !important;*/
   cursor: text;
 }
 
@@ -64,7 +64,6 @@
 
 .area-info {
     padding: 6px 8px;
-    /*font: 14px/16px Arial, Helvetica, sans-serif;*/
     background: white;
     background: rgba(255,255,255,0.8);
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
@@ -89,4 +88,12 @@
 .rep-link:visited {
   color: black;
   text-decoration: none;
+}
+
+.touch-test-on {
+  visibility: visible;
+}
+
+.touch-test-off {
+  visibility: hidden;
 }

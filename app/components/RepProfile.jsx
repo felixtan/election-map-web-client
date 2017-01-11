@@ -268,28 +268,3 @@ export default function Sidebar(props, context) {
     )
   }
 }
-
-/*
-<div className="w3-row-padding w3-center w3-rest" style={iconLinkRowStyle}>
-  <div className="w3-container w3-third icon-link" style={iconTextStyle}>
-    <a href={props.rep.urls[0]}></a>
-    <img src="../../img/icon-wikipedia.png" style={iconLinkStyle}/>
-    Wikipedia
-  </div>
-  <div className="w3-container w3-third icon-link">
-    <a href={props.rep.urls[1]}></a>
-    <img src="../../img/icon-ballotpedia.png" style={iconLinkStyle}/>
-    Ballotpedia
-  </div>
-  <div className="w3-container w3-third icon-link">
-    <a href={props.rep.urls[1]}></a>
-    <img src="../../img/icon-united-states-seal.png" style={iconLinkStyle}/>
-    Official
-  </div>
-  {/*<div className="w3-container w3-quarter icon-link">
-    <a href={props.rep.urls[1]}></a>
-    <img src="../../img/icon-google.png" style={iconLinkStyle}/>
-    Google
-  </div>
-</div>
-*/
