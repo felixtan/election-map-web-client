@@ -1,3 +1,3 @@
 # Politics Map
 
-An interactive real-time map of the political makeup of the US and the World.
+An interactive map of the representation of the US federal government.

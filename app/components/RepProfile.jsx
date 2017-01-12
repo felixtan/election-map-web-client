@@ -5,6 +5,7 @@ import countryCodeToNames from '../fixtures/countryISOA2toNames'
 import ImageAttribution from '../components/ImageAttribution'
 import statesLetterCodeToName from '../fixtures/statesLetterCodeToName'
 import { ordinalizeDistrict } from '../utils/helpers'
+const blankProfileImg = process.env.NODE_ENV === 'production' ? './img/blank-profile-pic.png' : '../app/public/img/blank-profile-pic.png'
 
 const partyNameToCode = _.reduce(partyCodeToName, (res, name, code) => {
   res[name] = code
@@ -68,8 +69,6 @@ const getIncumbentClassName = (props) => {
       })
 
       seatUpForElection = x === undefined ? false : _.includes(x.name.toLowerCase(), incumbentLastName.toLowerCase())
-
-      // if (x === undefined) console.log(props)
     }
   }
 
@@ -226,7 +225,7 @@ export default function Sidebar(props, context) {
 
   const getImg = () => {
     if (props.rep.photo === undefined || props.rep.photo.url === null || props.rep.photo.url === undefined || props.rep.photo.url === "") {
-      return './img/blank-profile-pic.png'
+      return blankProfileImg
     } else {
       return props.rep.photo.url
     }

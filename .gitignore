@@ -10,3 +10,6 @@ node_modules
 
 # dev
 .storybook
+
+# api stuff
+app/config

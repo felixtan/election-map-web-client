@@ -3,11 +3,6 @@ import { render } from 'react-dom'
 import RepProfiles from './RepProfiles'
 
 require('../js/leaflet-sidebar.js')
-// require('../styles/components/leaflet-sidebar.css')
-
-const testStyle = {
-    color: 'red'
-}
 
 export default class SidebarContainer extends React.Component {
   constructor(props) {
@@ -52,35 +47,34 @@ export default class SidebarContainer extends React.Component {
   }
 
   /*
-    Wihtout the mouseover and mouseout events, the sidebar isn't scrollable
-    Solution: https://gis.stackexchange.com/questions/104507/disable-panning-dragging-on-leaflet-map-for-div-within-map
+    Wihtout the mouseover and mouseout events, the sidebar isn't scrollable on mobile.
+    It has something to do with react-leaflet.
+
+    Relevant:
+    https://gis.stackexchange.com/questions/104507/disable-panning-dragging-on-leaflet-map-for-div-within-map
   */
   onMouseOver() {
     this.props.map.dragging.disable()
     this.props.map.scrollWheelZoom.disable()
     this.props.map.doubleClickZoom.disable()
-    document.getElementById('touch-test').className = 'touch-test-on'
   }
 
   onMouseOut() {
     this.props.map.dragging.enable()
     this.props.map.scrollWheelZoom.enable()
     this.props.map.doubleClickZoom.enable()
-    document.getElementById('touch-test').className = 'touch-test-off'
   }
 
   onTouchStart() {
     this.props.map.dragging.disable()
     this.props.map.scrollWheelZoom.disable()
     this.props.map.doubleClickZoom.disable()
-    document.getElementById('touch-test').className = 'touch-test-on'
   }
 
   onTouchEnd() {
     this.props.map.dragging.enable()
     this.props.map.scrollWheelZoom.enable()
     this.props.map.doubleClickZoom.enable()
-    document.getElementById('touch-test').className = 'touch-test-off'
   }
 
   render() {
@@ -110,7 +104,7 @@ export default class SidebarContainer extends React.Component {
               <div className="sidebar-pane" id="profile">
 
                   <h1 className="sidebar-header">
-                      Representatives Profile <span id='touch-test' className='touch-test-off' style={testStyle}><strong>LOL</strong></span>
+                      Representatives Profile
                       <span className="sidebar-close"><i className="fa fa-caret-left"></i></span>
                   </h1>
 
