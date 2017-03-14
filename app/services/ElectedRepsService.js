@@ -1,6 +1,7 @@
-const api = process.env.NODE_ENV === 'development' ? require('../config/devApi.json') : null
-const representativesUri = process.env.NODE_ENV === 'development' ? api.representatives : null
-const electionsUri = process.env.NODE_ENV === 'development' ? api.elections : null
+const config = require('../config/index.js')
+const api = process.env.NODE_ENV === 'production' ? config.api.prod : config.api.dev
+const representativesUri = api.representatives
+const electionsUri = api.elections
 
 // CONSTANTS
 // levels of gov

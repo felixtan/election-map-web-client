@@ -1,6 +1,6 @@
+const basemap = require('../config/index.js').mapbox
 import React from 'react'
 import { TileLayer } from 'react-leaflet'
-import basemap from '../config/mapbox.json'
 import licenseLinks from '../fixtures/licenseLinks'
 
 export default function BaseMapLayer(props, context) {
