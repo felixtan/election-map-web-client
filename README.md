@@ -6,11 +6,11 @@ Web frontend for an interactive map of the representation of the US federal gove
 
 ![](screenshot.png)
 
-##Install
+## Install
 ```
 npm install
 ```
-##Config
+## Config
 - Create a `config` directory in `app/`
 - Create a file `devApi.json` in `app/config/` which exports the API endpoints for the representatives and elections data.
 ```javascript
@@ -29,11 +29,11 @@ npm install
 }
 ```
 
-##Running the development server
+## Running the development server
 1. Make sure the backend server is running.
 2. Call `npm run dev`
 
-##Running the production server
+## Running the production server
 1. Make sure the backend server is running.
 2. `npm run build`
 3. `npm start`
