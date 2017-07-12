@@ -1,4 +1,4 @@
-# Politics Map
+# Election Map
 
 Web frontend for an interactive map of the representation of the US federal government. See [politics-map-backend](https://github.com/felixtan/politics-map-backend) for the backend.
 
